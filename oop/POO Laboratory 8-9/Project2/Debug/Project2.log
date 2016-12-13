@@ -1,0 +1,41 @@
+﻿Build started 12/06/2016 17:27:09.
+     1>Project "C:\Users\Mihai\Desktop\INFO\C#\test01\POO Laboratory 8-9\Project2\Project2.vcxproj" on node 2 (Build target(s)).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Lab5-7.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /D _MBCS /D _CRT_SECURE_NO_WARNINGS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt AppStart.cpp domain.cpp dynVector.cpp testMain.cpp tests.cpp
+         tests.cpp
+     1>c:\users\mihai\desktop\info\c#\test01\poo laboratory 8-9\project2\dynvector.h(83): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+         c:\users\mihai\desktop\info\c#\test01\poo laboratory 8-9\project2\dynvector.h(82): note: while compiling class template member function 'void Vector<Movie>::resize(double)'
+         c:\users\mihai\desktop\info\c#\test01\poo laboratory 8-9\project2\dynvector.h(68): note: see reference to function template instantiation 'void Vector<Movie>::resize(double)' being compiled
+         c:\users\mihai\desktop\info\c#\test01\poo laboratory 8-9\project2\ui.h(7): note: see reference to class template instantiation 'Vector<Movie>' being compiled
+         AppStart.cpp
+     1>c:\users\mihai\desktop\info\c#\test01\poo laboratory 8-9\project2\appstart.cpp(15): warning C4101: 'testing': unreferenced local variable
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         testMain.cpp
+         dynVector.cpp
+         domain.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Mihai\Desktop\INFO\C#\test01\POO Laboratory 8-9\Debug\Lab8-9.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Mihai\Desktop\INFO\C#\test01\POO Laboratory 8-9\Debug\Lab8-9.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Mihai\Desktop\INFO\C#\test01\POO Laboratory 8-9\Debug\Lab8-9.lib" /MACHINE:X86 "Debug\Lab5-7.res"
+         Debug\controller.obj
+         Debug\domain.obj
+         Debug\dynVector.obj
+         Debug\FilePlaylist.obj
+         Debug\HTMLPlaylist.obj
+         Debug\Playlist.obj
+         Debug\repo.obj
+         Debug\AppStart.obj
+         Debug\CSVPlaylist.obj
+         Debug\testMain.obj
+         Debug\tests.obj
+         Debug\UI.obj
+         Debug\validators.obj
+     1>tests.obj : error LNK2005: "int __cdecl fct2(int)" (?fct2@@YAHH@Z) already defined in AppStart.obj
+     1>tests.obj : error LNK2005: "void __cdecl go(void)" (?go@@YAXXZ) already defined in AppStart.obj
+     1>tests.obj : error LNK2005: "public: static int DE::n" (?n@DE@@2HA) already defined in AppStart.obj
+     1>C:\Users\Mihai\Desktop\INFO\C#\test01\POO Laboratory 8-9\Debug\Lab8-9.exe : fatal error LNK1169: one or more multiply defined symbols found
+     1>Done Building Project "C:\Users\Mihai\Desktop\INFO\C#\test01\POO Laboratory 8-9\Project2\Project2.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:19.66
