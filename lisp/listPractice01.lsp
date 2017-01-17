@@ -1,10 +1,11 @@
+;find position of an element in a linear list
 (defun findPos(l p)
 	(cond
 		( (null l) nil)
 		( (= p 1) (car l) )
 		( t (findPos (cdr l) (- p 1)) )))
 
-
+;find element in a list on any level
 (defun findE(l e)
   (Cond
    ( (null l) nil)
@@ -12,6 +13,7 @@
    ((= e (car l)) t)
    (t (findE (cdr l) e))))
 
+;get all sublists of a list
 (defun getLists(l)
   (cond
    ( (null l ) nil)
@@ -19,7 +21,7 @@
    ( t (getLists( cdr l)))
   )
 )
-
+;this does not work?
 (defun lists(l)
   (cond 
    ( t (cons l (getLists l)))))
@@ -32,7 +34,7 @@
    (t (cons (car l) (setfromlist (cdr l) ) ) )
    )
 )
-
+;dot product of 2 vectors
 (defun dotProduct(l1 l2)
   (cond
   ((or (null l1) (null l2)) 0)
@@ -128,10 +130,18 @@
    (t (or (getLevel (caddr l) n (+ c 1)) (getLevel (cadr l) n (+ c 1))))
   )
 )
-
+;get tree inorder; looks weird bc of random null value
 (defun inorder(l)
   (cond
    ((atom l) l)
    ((not (null l)) (cons (inorder (cadr l)) (cons (car l) (inorder (caddr l)) ) ) )
   )
+)
+;check if tree is balanced
+;not executed
+(defun balanced (l)
+    (cond
+        ((or (null l) (atom l)) 0)
+        (t (+ (- (balanced (cadr l)) 1) (+ (balanced (caddr l)) 1)))
+    )
 )
