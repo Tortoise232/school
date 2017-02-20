@@ -72,9 +72,9 @@
 ;reverse heterogeneus list
 (defun reverseList(l)
 (cond
- ( (null l) nil)
- ( (listp (car l)) (reverseList (cdr l)))
- ( t (list (reverseList (cdr l)) (car l)))
+ ( (null l) '())
+ ( (listp (car l)) (reverseList (car l)))
+ ( t (cons (car l) (reverseList (cdr l))))
 )
 )
 

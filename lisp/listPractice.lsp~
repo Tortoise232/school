@@ -142,6 +142,11 @@
 (defun balanced (l)
     (cond
         ((or (null l) (atom l)) 0)
-        (t (+ (- (balanced (cadr l)) 1) (+ (balanced (caddr l)) 1)))
+        (t 
+            (+ 
+            (if (not (null (cadr l))) (- (balanced (cadr l)) 1) 0) 
+            (if (not (null (caddr l))) ( +(balanced (caddr l)) 1) 0)
+            )
+        )
     )
 )
