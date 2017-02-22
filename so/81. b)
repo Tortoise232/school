@@ -1,0 +1,22 @@
+#!/bin/bash
+#Writes into the file newText
+echo "Input number:"
+read nr
+function checkFolder
+{
+	ls "$1" | while read line; do
+		if [ -d "$line" ]; then
+			checkFolder "$line"
+		else
+			checkText=""
+			checkText=$(file "$line" | grep text -s)
+			if [ "$checkText" != "" ]; then
+				tempNr=0
+				if [ 'awk -v nrAwk="$nr" 'BEGIN{check=0} {for(i = 0; i <= NF; i++) {if(length($i)>nrAwk) check++;}} END {print check;}' "$line" 2>/dev/null ' -gt 0 ]; then
+					echo "$line"
+				fi
+			fi
+		fi
+	done
+}
+checkFolder "$1" | sort > newText

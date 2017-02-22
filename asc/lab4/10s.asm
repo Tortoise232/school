@@ -1,0 +1,44 @@
+ASSUME cs: code, ds:data 
+data SEGMENT
+ a db 2h
+ b dw 4h
+ c db 6h
+ d dd 0Ah
+ x dd ?
+data ENDS
+
+code SEGMENT 
+start: 
+	mov ax,data 
+	mov ds,ax
+	mov al,a
+	cbw
+	mul b ; dx:ax = a*b 
+	mov bx,ax
+	mov al,c 
+	cbw 
+	add ax,7
+	mov word ptr x,ax
+	mov ax,bx
+	sub word ptr x,ax
+	sbb word ptr x+1,dx ; x = bx - dx:ax
+	mov ax, word ptr x
+	mov dx, word ptr x+1 ; dx:ax = x
+	mov bx,ax
+	mov al,a
+	cbw
+	mov cx,ax
+	mov ax,bx
+	div cx ;ax = x/bx
+	sub word ptr d,ax
+	mov bx,6h
+	sub word ptr d,bx
+	sbb word ptr d+1,0h ; d = d - 6
+	mov ax,word ptr d
+	mov dx,word ptr d+1
+	mov word ptr x,ax
+	mov word ptr x+1,dx
+	mov ax,4C00h 
+	int 21h 
+code ENDS 
+END start

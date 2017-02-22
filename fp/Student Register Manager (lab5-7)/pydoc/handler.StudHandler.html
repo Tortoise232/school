@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module handler.StudHandler</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="handler.html"><font color="#ffffff">handler</font></a>.StudHandler</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cmihai%5Cdesktop%5Cinfo%5Ceclipse%5Cstudent%20register%20manager%20%28lab5-7%29%5Chandler%5Cstudhandler.py">c:\users\mihai\desktop\info\eclipse\student register manager (lab5-7)\handler\studhandler.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="handler.StudHandler.html#StudHandler">StudHandler</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="StudHandler">class <strong>StudHandler</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Handles&nbsp;operations&nbsp;with&nbsp;the&nbsp;students<br>
+Functionalities:<br>
+update&nbsp;student<br>
+find&nbsp;student<br>
+list&nbsp;all&nbsp;students<br>
+add&nbsp;student<br>
+remove&nbsp;students<br>
+sort&nbsp;students&nbsp;alphabetically&nbsp;<br>
+sort&nbsp;students&nbsp;by&nbsp;grade&nbsp;(correlated&nbsp;with&nbsp;a&nbsp;list&nbsp;of&nbsp;assignments&nbsp;with&nbsp;the&nbsp;same&nbsp;description)<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="StudHandler-__init__"><strong>__init__</strong></a>(self, studrepo)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="StudHandler-addStud"><strong>addStud</strong></a>(self)</dt><dd><tt>adds&nbsp;a&nbsp;new&nbsp;student&nbsp;to&nbsp;the&nbsp;repository<br>
+calls&nbsp;add&nbsp;function&nbsp;in&nbsp;the&nbsp;repository</tt></dd></dl>
+
+<dl><dt><a name="StudHandler-findGradeByAssign"><strong>findGradeByAssign</strong></a>(self, Student, listAssign)</dt></dl>
+
+<dl><dt><a name="StudHandler-findStud"><strong>findStud</strong></a>(self)</dt><dd><tt>finds&nbsp;a&nbsp;student&nbsp;by&nbsp;asking&nbsp;for&nbsp;an&nbsp;ID<br>
+returns&nbsp;the&nbsp;id</tt></dd></dl>
+
+<dl><dt><a name="StudHandler-listStud"><strong>listStud</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="StudHandler-removeStud"><strong>removeStud</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="StudHandler-sortStudentsABC"><strong>sortStudentsABC</strong></a>(self, listStud, listAssign)</dt><dd><tt>Sorts&nbsp;a&nbsp;list&nbsp;of&nbsp;Student&nbsp;objects&nbsp;alphabetically<br>
+input:&nbsp;listStud&nbsp;-&nbsp;list&nbsp;of&nbsp;students<br>
+output:&nbsp;listStud&nbsp;-&nbsp;list&nbsp;of&nbsp;students&nbsp;(sorted)</tt></dd></dl>
+
+<dl><dt><a name="StudHandler-statByAssignABC"><strong>statByAssignABC</strong></a>(self, assignrepo, desc)</dt><dd><tt>Function&nbsp;returns&nbsp;a&nbsp;list&nbsp;of&nbsp;strings&nbsp;that&nbsp;represent&nbsp;the&nbsp;students&nbsp;<br>
+and&nbsp;their&nbsp;respective&nbsp;grades&nbsp;that&nbsp;fit&nbsp;the&nbsp;description&nbsp;in&nbsp;alphabetical&nbsp;order<br>
+intput:&nbsp;assignrepo&nbsp;-&nbsp;assignment&nbsp;repository<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;desc&nbsp;-&nbsp;description&nbsp;of&nbsp;the&nbsp;assignment<br>
+output:&nbsp;newList&nbsp;-&nbsp;list&nbsp;containing&nbsp;the&nbsp;students&nbsp;and&nbsp;their&nbsp;assignment&nbsp;grades</tt></dd></dl>
+
+<dl><dt><a name="StudHandler-statByAssignGr"><strong>statByAssignGr</strong></a>(self, assignrepo, desc)</dt></dl>
+
+<dl><dt><a name="StudHandler-updateStud"><strong>updateStud</strong></a>(self)</dt><dd><tt>updates&nbsp;a&nbsp;student's&nbsp;name&nbsp;and&nbsp;group</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>
