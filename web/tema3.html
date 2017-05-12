@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <style>
+		body{
+			margin:0;
+			padding:0;
+			
+		}
+		
+		.meniuSus{
+			top: 0px;
+        
+			width: 100%;
+			height: 150px;
+        
+			padding: 0px;
+			margin: 0px;
+        
+			background-color: #2D1152;
+			color: white;
+		}
+		
+		.meniuSus ul{
+			margin: 0px;
+			border: 0px;
+			width: 90%;
+			list-style: none;
+		}
+		
+		.meniuSus ul li{
+			display: inline;
+			padding-right: 40px;
+		}
+		
+		
+		#logo{
+			width: 200px;
+			height: 70px;
+		}
+		
+		#logo img{
+			margin-top: 15px;
+		}
+		
+		.menuSB{
+			margin-top: 5px;
+			position: fixed;
+			width: 95%;
+			height: 100px;
+			background-color: white;
+		}
+		
+		.menuSB div{
+			display: inline;
+			padding-right: 40px;
+		}
+		
+		.menuSB ul{
+			margin: 0px;
+			border: 0px;
+			width: 100%;
+			list-style: none;
+		}
+		
+		.menuSB ul li{
+			display: inline;
+			padding-right: 40px;
+		}
+		
+		#searchBar{
+			position: absolute;
+			left: 250px;
+			width: 60%;
+			border: 0px;
+			padding: 0px;
+			margin: 0px;
+			float:left;
+        
+			text-align: center;
+		}
+		
+		#inputSearch{
+			position: relative;
+			top: 25px;
+			width: 50%;
+			height: 40px;
+		}
+    
+		#submitBtn{
+			border-style: none;
+			background-color: dodgerblue;
+			color: white;
+			position: relative;
+			top: 25px;
+			width: 55px;
+			height: 45px;
+			margin-left: 15px;
+		}
+		
+		.leftMenu{
+			float:left;
+			margin:0;
+			height:500px;
+			width:25%;
+			border-right: solid;
+			border-color: #2D1152;
+		}
+		
+		.centerMenu{
+			margin:0;
+			float:left;
+			height:500px;
+			width:49%;
+			
+			border-right: solid;
+			border-color: #2D1152;
+		}
+		
+		.rightMenu{
+			margin:0;
+			float:right;
+			height:500px;
+			width:25%;
+		}
+		
+		.leftMenu li{
+			list-style-type: none;
+		}
+		
+		span {
+			position: absolute;
+			top: 190px;
+			
+		}
+		
+		#span-1 {
+			left: 30%;
+		}
+
+		#span-2 {
+			left: 40%;
+		}
+	
+		#span-3 {
+			left: 50%;
+		}
+	
+		#span-4 {
+			left: 60%;
+		}
+		
+		article:hover .inner {
+			display: block;
+			margin-top:100px;
+			margin-left:10px;
+		}
+
+		.inner {
+			display: none;
+		}
+		
+		.inner p{
+			/*clear:right;*/
+		}
+		
+		.inner img{
+			float:left;
+		}
+		.rightMenu li{
+			list-style-type: none;
+		}
+		.rightMenu ul{
+			columns: 2;
+		}
+
+    </style>
+  </head>
+  <body>
+	
+	<div class='meniuSus'>
+        <ul>
+            <li>Home</li>
+            <li>News</li>
+            <li>Sport</li>
+			<li>Arts</li>
+        </ul>
+		<ul>
+			<div class='menuSB'>
+				<ul>
+					<li><div id='logo'><img src="logo.jpg" alt="Smiley face" height="70" width="200"></div></li>
+					<li><div id='searchBar'>
+						<input type='text' id='inputSearch'>
+						<input type='submit' id='submitBtn' value= 'Search'>
+					</div></li>
+				</ul>
+			</div>
+	    </ul>
+	</div>
+	
+	<div class='leftMenu'>
+		<ul>
+			<li>Article 1</li>
+			<li>Article 1</li>
+			<li>Article 1</li>
+			<li>Article 1</li>
+			<li>Article 1</li>
+			<li>Article 1</li>
+			<li>Article 1</li>
+			<li>Article 1</li>
+			<li>Article 1</li>
+			<li>Article 1</li>
+			<li>Article 1</li>
+			<li>Article 1</li>
+			<li>Article 1</li>
+			<li>Article 1</li>
+        </ul>
+	</div>
+	<div class='centerMenu'>
+		<article>
+			<span id="span-1">Home</span>
+			<div class="inner">
+				<h2>Home</h2>
+				<img src='pinguin.jpg' alt="pinguin" height="70" width="70"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			</div>
+		</article>
+		<article>
+			<span id="span-2">News</span>
+			<div class="inner">
+				<h2>News</h2>
+				<img src='pinguin.jpg' alt="pinguin" height="70" width="70"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			</div>
+		</article>
+		<article>
+			<span id="span-3">Sport</span>
+			<div class="inner">
+				<h2>Sport</h2>
+				<img src='pinguin.jpg' alt="pinguin" height="70" width="70"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			</div>
+		</article>
+		<article>
+			<span id="span-4">Art</span>
+			<div class="inner">
+				<h2>Art</h2>
+				<img src='pinguin.jpg' alt="pinguin" height="70" width="70"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			</div>
+		</article>
+	</div>
+	<div class='rightMenu'>
+		<ul>
+			<li><img src='pinguin.jpg' alt="pinguin" height="70" width="70"></li>
+			<li><img src='pinguin.jpg' alt="pinguin" height="70" width="70"></li>
+			<li><img src='pinguin.jpg' alt="pinguin" height="70" width="70"></li>
+			<li><img src='pinguin.jpg' alt="pinguin" height="70" width="70"></li>
+			<li><img src='pinguin.jpg' alt="pinguin" height="70" width="70"></li>
+			<li><img src='pinguin.jpg' alt="pinguin" height="70" width="70"></li>
+			<li><img src='pinguin.jpg' alt="pinguin" height="70" width="70"></li>
+			<li><img src='pinguin.jpg' alt="pinguin" height="70" width="70"></li>
+			<li><img src='pinguin.jpg' alt="pinguin" height="70" width="70"></li>
+        </ul>
+	</div>
+			
+    
+
+  </body>
+</html>

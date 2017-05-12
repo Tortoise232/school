@@ -1,0 +1,122 @@
+aiSeminar2
+
+Evolutive Algorithms
+
+Problem statement: 
+A = { a(i) inclus in  Z | i  = 1,n }
+B inclus in A : suma(m,i=1,bi)  = S
+
+rezolvare prin metoda backtracking - 2^n
+
+//EA e o ciorba.
+the basics of an EA: 
+	-representation - binary sequence representing if a number is or isn't part of the sum
+	-fitness - f(p) = abs(sum(i=1,n,p(i)*a(i)) - S)
+	-operators - crossover
+			   - mutation
+	-selection - elitist 
+	-stop condition -
+	
+p(i) = 0 daca a nu apartine lui b
+	 = 1 daca a apartine lui b111
+
+	 
+MAD PYTHON CODE:
+
+from random import *
+
+class Problem:
+	def __init__(self,fname: "date.in"):
+		self.n = 0
+		self.A = []
+		self.S = 0
+		self.fileName = fname
+		self.load()
+	
+	def load(self)
+		//TO DO
+	
+
+class Inidividual:
+	def __init__(self, problem):
+		self.size = problem.n
+		self.vector = [sample([0,1],1)[k] for k in xrange(self.size)] #the genes of our individual
+		self.summ = 0
+		self.fitness = 0
+	
+	def fitness(self, p):
+		self.summ  = sum([p, A[k] * self.vector[k] for k in xrange(self.size)])
+		
+	self.fitness = abs(p.S - self.summ)
+	
+	
+class Population:
+	def __init__(self, nIndividuals, problem):
+		self.populationSize = nIndividuals
+		self.population = [Individual(p) for k in xrange(self.populationSize)]
+		
+	#every individual receives a fitness rating 
+	def evaluate(self, problem): 
+		for X in self.population:
+			X.fitness(problem)
+			
+	def reunion( self, toAdd):
+		self.populationSize += toAdd.populationSize
+		self.population += toAdd.population
+		
+	def selection(self, n):
+		#lambdaTime
+		if n  < self.populationSize:
+			self.population = sorted(self.population,key=individual:Individual.fitness)
+		self.population = self.pop[:n]
+	
+	def best(self, n):
+		aux = sorted(self,population, key = lambda Individual: Individual.fitness)
+		return aux[:n]
+	
+	class Algorithm:
+		def __init__(self, nIndividuals = 100, nGenerations = 100, fname = "date.in"):
+			self.problem = Problem(fname)
+			self.nIndividuals = nIndividuals 
+			self.nGenerations = nGenerations
+			self.population = Population(self.nIndividuals)
+			self.population.evaluate(self.problem)
+			
+			
+		def iteration(self):
+			indexes = range(self.nIndividuals)
+			shuffle(indexes)
+			no = self.nIndividuals//2
+			offspring = Population(no, problem)
+			for k in xrange(no): 												#population.population is a thing because Algorithm has a Population that has a population
+				offspring.population[k].vector = crossover(self.population.population.[indexes[k*2]], self.population.population[indexes[k*2 + 1]])
+				mutation(offspring.population[k]) 
+			offspring.evaluate(self.problem)
+			self.population.reunion(offspring)
+			self.population.selection(self.nIndividuals)
+			
+		def sum():
+			for k in xrange(self.nGenerations):
+				self.iteration()
+			return self.population.best(1)
+			
+		def crossover(self,i1,i2):
+			aux = []
+			for k in xrange(i1.size):
+				if random() < 0.5:
+					aux.append(i1.v[k])
+				else:
+					aux.append(i2.v[k])
+			return aux[:]
+		
+		def mutate(self, ind):
+			if random < 0.1:
+				k = randint(ind.size)
+				ind.v[k] = 1 - ind.v[k]
+
+alg = Algorithm()
+result = alg.run()
+print(str(result[0]))
+
+SEMINAR 3 - QUIZ FOR SOME REASON
+

@@ -1,0 +1,2 @@
+issCurs2
+sequence diagram is an instantiation of the use cases

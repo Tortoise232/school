@@ -1,0 +1,13 @@
+Analysis model:
+	-Functional View:
+		-View Control Diagram?
+	-Architectural View:
+		-CD
+		-OD (snapshot) 
+	-Behavioural View:
+		-CD 
+		-SCD
+		-Sequence Diagram
+		-Activity Diagram
+		
+	

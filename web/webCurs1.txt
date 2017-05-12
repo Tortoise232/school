@@ -1,0 +1,34 @@
+web programming curs 1
+
+http://www.cs.ubbcluj.ro/orest/wp
+ 
+laborator: 12 prezente recuperare laboratoare este posibila (max 2 pe saptamana, probabil?)
+temele de lab - au deadline o saptamana sau 2
+examen: practic
+
+ce o sa facem:
+
+HTML 
+HTTP
+CSS
+Javascript
+jquery
+angular.js / react.js
+xml / xslt / xml - schema
+ajax, json
+php
+java subsets & jsp
+c#
+
+Securitate web:
+	sql injection
+	xss
+	source origin policy
+
+webgl
+web sockets
+
+EXAMEN:
+css
+javascript
+ajax

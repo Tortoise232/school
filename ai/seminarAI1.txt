@@ -1,0 +1,156 @@
+seminarAI1
+
+Uninformed Search:
+
+DFS
+
+def dfs_node(root, element, tree):
+	toVisit = [root]
+	visited = []
+	found = False
+	while len(toVisit) != 0  and not found:
+		node = toVisit.pop(0)
+		if node == element:
+			found = True
+		else:
+			visited.append(node)
+			children = expand(node, tree)
+			aux = []
+			for e in children:
+				if e not in visited:
+					aux.append(e)
+					toVisit = aux + toVisit
+	return found
+	
+	
+BFS is just the same but line 22 becomes toVisit = toVisit + aux
+
+def dfs_node(root, element, tree):
+	toVisit = [root]
+	visited = []
+	found = False
+	while (len(toVisit) != 0  and not found:
+		node = toVisit.pop(0)
+		if node == element:
+			found = True
+		else:
+			visited.append(node)
+			children = expand(node, tree)
+			aux = []
+			for e in children:
+				if e not in visited:
+					aux.append(e)
+				toVisit = toVisit + aux
+	return found
+	
+	
+
+Greedy algorithm:
+	toVisit = bestChildren
+		
+Greedy BFS:
+	order aux
+	
+Uniform Cost Search:
+	order toVisit
+
+Example:
+--------
+
+(A-B) 3
+(A-C) 2
+(A-D) 1
+(B-E) 4
+(B-F) 5
+(C-G) 0
+(G-K) 12
+(D-H) 7
+(D-I) 2
+(I-L) 4
+(I-M) 5
+(D-J) 9
+	
+DFS for the example: A B E F C G K D H I L M J
+					 A D I L M J H C G K B E F
+					 
+BFS: A B C D E F G H I J K L M 
+	 A D C B H I J G E F L M K  
+	 
+GREEDY:
+	A D I L 
+	
+		* the philosophical speech ensues here * tl;dr he knows greed; #testerLife #theWayToGo #machinesWillCodeAndWeWillTest; 
+		
+Greedy Best First Search:  (Greedy + DFS = GBFS, right guys?)
+	A D I L M H J C G K B E F 
+
+Uniform something something:
+	
+	A B C D E F G H I J  K  L M
+g	0 3 2 1 7 8 2 8 3 10 14 7 8
+h  10 5 2 .... and whatever (that's what the teacher said!) 
+
+g - dist(cost) from root to node)
+h - dist(cost) from the current node to the solution; this h function is called an heuristic
+
+f = h + g ---> A* algorithm
+
+A 
+D C B
+C B I H J
+G B I H J 
+B I H J K
+and so on (that's what the teacher said!)
+
+
+Queens problem:
+	if we were to approach the problem sequentially (placing every queen by DFS), placing the first queen renders 64 options, the second one 64* 63 and so on
+	sum(8,i =1, product(i, j = 0, 64 - j )) //i tried, ok?
+	*rice on a chessboard story ensues* tl;dr it takes too much time to compute it sequentially by DFS,
+	taking all arrangements of the 8 queens, however, is actually a permutation of the result space, so it's a lot more efficient
+	
+	
+The sliding puzzle:
+	we have an initial and a final state
+	think of it as a graph
+	from the root, there are no moves
+	after that, you can go in any direction (L, R, D, U)
+	from each state, you can again go any direction (L, R , D, U) this is infinite 
+	1st approach) you keep all the visited states, so that a DFS does not get stuck in an infinite loop (but this is costly)
+	2nd approach) if you approach the problem by BFS, at some point you will find a solution
+	
+Sudoku: 
+	you interpret the free spaces as position in an array; you fill that array with numbers, and then keep permuting untill correct 
+	
+ SEND+
+ MORE 
+ ----
+MONEY
+SENDMORY - amount of letters (digits)
+	(-1,-1,-1,-1,...)
+	(0,-1,...,-1) ... (9,-1,..,-1)
+	*this is the part where he says what about 5 professors said about their courses* (them being real hard, i mean REALLY HARD. NO REALLY)
+	
+ h = |D + E - Y| + |N + R - E| + |E + O - N| + |S + M - O| + |M|	
+
+ (different problem)
+ 2*n frogs - red
+		   - green
+
+RRR_GGG - we build a tree of how they could be moving
+first layer
+
+R_RRGGG
+RR_RGGG
+RRRG_GG
+RRRGG_G
+
+second layer
+_RRRGGG
+_RRRGGG
+R_RRGGG
+RRGR_GG
+
+third layer
+_RRRGGG
+... etc (teacher did this)

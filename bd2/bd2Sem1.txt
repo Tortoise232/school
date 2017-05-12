@@ -1,0 +1,46 @@
+bd2Sem1
+
+ADO.NET 
+
+set of classes that enable .NET framework programmers to interact with a variety of data sources, e.g., databases (SQL Server, Oracle, ..., XML files, ...
+-> .NET Framework Data provider for SQL Server - System.Data.SqlClient -> API prefix for Sql
+
+download and install: sql server studio, and after making my first c# application, change it to use the .NET Framework provider for Oracle
+
+
+SqlConnection
+SqlCommand
+SqlDataReader
+SqlDataAdapter
+
+code:
+-----
+
+SqlConnection con =  new SqlConnection("
+			Data Source = RIVENDELL; Initial Catalog = Northwind; Integrated Security = true");
+			YUser ID = sa; password = wp
+			
+con.Open();
+con.Close();
+
+SqlCommand command = new SqlCommand ("DELETE * FROM Pirates", con);
+command.ExecuteNewCommand();
+//command.ExecuteReader(); -> will return an object of type SqlDataReader
+//a query that returns a value? -> command.ExecuteScalar()
+
+SqlDataAdapter 
+DataSet //it has a suggestive name
+
+DataSet -> collection of (coll) Data Table
+		-> coll Data Relation
+		Data Table: coll DataColumn
+					coll DataRow
+					coll Constraint
+					
+SqlDataAdapters for any nr of tables we need
+the SqlDataAdapter has all these command objects: Select Command Insert Command, Delete Command, Update Command\
+To fill our DataSet, we use the fill method ( the connection has to be open beforehand)
+the update method sedns all the local changes back to the database
+
+Data Binding: open the form to our data set -> we will use a BindingSource that acts like a proxy between our data set and the grid
+
