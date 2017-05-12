@@ -90,6 +90,17 @@ class Individual:
                 auxGene = self.genotype[ct]
                 self.genotype[ct] = self.genotype[positionToSwitch]
                 self.genotype[positionToSwitch] = auxGene
+                break
+
+    def finalMutate(self,probability):
+        if random.uniform(0, 1) < probability:
+            positionToSwitch1 = random.randint(0, len(self.genotype) - 1)
+            positionToSwitch2 = random.randint(0, len(self.genotype) - 1)
+            while len(self.listOfWords[self.genotype[positionToSwitch1]]) != len(self.listOfWords[self.genotype[positionToSwitch2]]):
+                positionToSwitch1 = random.randint(0, len(self.genotype) - 1)
+            auxGene = self.genotype[positionToSwitch1]
+            self.genotype[positionToSwitch1] = self.genotype[positionToSwitch2]
+            self.genotype[positionToSwitch2] = auxGene
 
     #REFACTOR NAMES WHEN COMPLETELY SOBER
     def cycleCrossover(self, mom, probability):
@@ -214,7 +225,7 @@ class Problem:
             newIndividual = Individual(self.words,genome.copy(),deepcopy(self.board),self.listOfSpaces,self.splitmark)
             newIndividual.evalFitness()
             self.population.append(newIndividual)
-            print("CREATING INDIVIDUAL #" + str(ct) + "WITH " + str(newIndividual.fitness) + " FITNESS")
+            print("CREATING INDIVIDUAL #" + str(ct) + " WITH " + str(newIndividual.fitness) + " FITNESS")
         self.population = Population(self.population)
 
     # here we process the black spots, words and board to find how we can split the
@@ -297,7 +308,7 @@ class EvolutiveAlgorithm:
                 bestFitness = self.population.listOfIndividuals[0].fitness
                 bestIndividual = deepcopy(individual)
         avarageFitness = float(avarageFitness) / self.populationSize
-        return [bestFitness,deepcopy(bestIndividual)]
+        return [bestFitness,deepcopy(bestIndividual),avarageFitness]
 
     def run(self):
         bestFitness = 500
@@ -308,9 +319,9 @@ class EvolutiveAlgorithm:
             if pair[0] < bestFitness:
                 bestFitness = pair[0]
                 bestIndividual = pair[1]
-                print("ITERATION #" + str(ct) + " FITNESS " + str(pair[0]))
+                print("ITERATION #" + str(ct) + " FITNESS " + str(pair[0]) + " AVERAGE: " + str(pair[2]))
             if ct % 100 == 0:
-                print("ITERATION #" + str(ct) + " FITNESS " + str(pair[0]))
+                print("ITERATION #" + str(ct) + " FITNESS " + str(pair[0]) + " AVERAGE: " + str(pair[2]))
         print("BEST INDIVIDUAL: ")
         if(len(set(bestIndividual.genotype)) == len(bestIndividual.genotype)):
             print(bestIndividual)
@@ -326,9 +337,12 @@ class EvolutiveAlgorithm:
             #newIndividual = deepcopy(parent1)
             #newIndividual.cycleCrossover(parent2,self.problem.crossoverFactor)
             newIndividual = Individual(self.problem.words, genome, self.problem.board, self.problem.listOfSpaces, self.splitMark)
-            newIndividual.crossover(parent1,parent2)
+            newIndividual.crossover(parent1, parent2)
             newIndividual.mutate(self.problem.mutationFactor)
             newIndividual.evalFitness()
+            if newIndividual.fitness <= 5:
+                newIndividual.finalMutate(self.problem.mutationFactor)
+                newIndividual.evalFitness()
             newPopulation.append(newIndividual)
         for kid in newPopulation:
             self.population.listOfIndividuals.append(kid)
@@ -342,7 +356,7 @@ class EvolutiveAlgorithm:
         self.population = problem.population
         self.populationSize = problem.populationSize
 
-myProblem = Problem("data.in","params.in")
+myProblem = Problem("easyData.in","params.in")
 myAlgo = EvolutiveAlgorithm(myProblem)
 print("PROCEED WITH ITERATIONS?")
 x = "yes"
