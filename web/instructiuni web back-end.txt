@@ -1,0 +1,4 @@
+xamp -> my comp/c -> xamp -> htdocs/ aici facem folderu proiectului, in el punem fisiere de php sau alte foldere (amdin, site, ce doamne mai e, cum ai profii pe site-ul lor)
+in browser accesam localhost/numele_folderului_cu_proiectul(dinhtdocs)/unuldintrefisiere(index.php,index.js)
+baza de date tine de apache
+localhost/phpmyadmin

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE collection SYSTEM "collection.dtd">
+<?xml-stylesheet type="text/xsl" href="recipe.xsl"?>
+<?xml-stylesheet  rel="stylesheet" type="text/css" href="recipe.css"?>
+<recipes>
+	<recipe category="Desert">
+		<name>Negresa</name>
+		<ingredients>eggs;milk;sorry;man</ingredients>
+		<preptime>20</preptime>
+		<cooktime>30</cooktime>
+		<steps>maiStepsNow</steps>
+	</recipe>
+	<recipe category="Desert">
+		<name>Negresa</name>
+		<ingredients>eggs;milk;sorry;man</ingredients>
+		<preptime>20</preptime>
+		<cooktime>30</cooktime>
+		<steps>maiStepsNow</steps>
+	</recipe>
+	<recipe category="Desert">
+		<name>Negresa</name>
+		<ingredients>eggs;milk;sorry;man</ingredients>
+		<preptime>5</preptime>
+		<cooktime>30</cooktime>
+		<steps>maiStepsNow</steps>
+	</recipe>
+	<recipe category="Desert">
+		<name>Negresa</name>
+		<ingredients>eggs;milk;sorry;man</ingredients>
+		<preptime>10</preptime>
+		<cooktime>30</cooktime>
+		<steps>maiStepsNow</steps>
+	</recipe>
+	<recipe category="Desert">
+		<name>Negresa</name>
+		<ingredients>eggs;milk;cocoa;sugar;</ingredients>
+		<preptime>20</preptime>
+		<cooktime>60</cooktime>
+		<steps>maiStepsNow</steps>
+	</recipe>
+	<recipe category="Simple">
+		<name>Boiled Egg(s)</name>
+		<ingredients>eggs;water;pot</ingredients>
+		<preptime>1</preptime>
+		<cooktime>1</cooktime>
+		<steps>water in pot; pot on stove; egg in pot; boil;</steps>
+	</recipe>
+</recipes>

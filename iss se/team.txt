@@ -1,0 +1,15 @@
+Petean Traian-Mihai - team leader
+Novac Andrei
+Paval Teodor - head of hr (secretera sef)
+Pop Alexandru
+Pop Catalin
+Onac Laura
+Pescar Denisa
+Orha Tudor
+
+back-end;
+database handling;
+front-end;
+testing;
+modelling;
+hr; 

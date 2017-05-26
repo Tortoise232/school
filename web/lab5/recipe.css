@@ -1,0 +1,39 @@
+recipe {
+	display: block;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+name {
+	display: inline-block;
+	width: 30%;
+	background-color: #ccefef;
+	padding-right: 5px;
+}
+
+preptime {
+	display: inline-block;
+	width: 15%;
+	border-left-style: solid;
+	border-left-width: 1px;	
+	padding-left: 5px;
+}
+
+cooktime {
+	display: inline-block;
+	width: 15%;
+	border-left-style: solid;
+	border-left-width: 1px;	
+	padding-left: 5px;	
+}
+
+steps {
+	display: inline-block;
+	width: 20%;
+	border-left-style: solid;
+	border-left-width: 1px;	
+	padding-left: 5px;
+}
