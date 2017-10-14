@@ -5,7 +5,7 @@
 class SuperMarket
 {
 private:
-	std::vector<Product>& products = std::vector<Product>();
+	std::vector<Product> products = std::vector<Product>();
 	std::mutex& mmmoneymutex = std::mutex();
 	int money;
 public:

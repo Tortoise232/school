@@ -32,7 +32,10 @@ public class PermutationCrypter {
     }
 
     public String fillString(String plainText){
-        int diff = plainText.length() % this.encryptionKey.size();
+        int diff = 0;
+        if(plainText.length() % this.encryptionKey.size() != 0)
+            diff = this.encryptionKey.size() - plainText.length() % this.encryptionKey.size();
+
         while(diff > 0) {
             plainText += "_";
             diff--;
@@ -49,13 +52,31 @@ public class PermutationCrypter {
         return true;
     }
 
+    public String decrypt(String plainText){
+        String cipherText = new String();
+        plainText = plainText.toLowerCase();
+        if(!this.checkText(plainText))
+            return "INVALID CIPHER TEXT";
+        plainText = this.fillString(plainText);
+        ArrayList<Integer> inverseKey = new ArrayList<>(encryptionKey);
+        for(int ct=0; ct < this.encryptionKey.size(); ct++){
+            inverseKey.set(this.encryptionKey.get(ct), ct);
+        }
+        for(int ct = 0; ct < plainText.length(); ct += encryptionKey.size() ){
+            for(int ctEncryptionKey = 0; ctEncryptionKey < encryptionKey.size(); ctEncryptionKey ++){
+                cipherText += plainText.charAt(ct + inverseKey.get(ctEncryptionKey));
+            }
+        }
+        return cipherText.toLowerCase();
+    }
+
     public String crypt(String plainText){
         if(!this.checkText(plainText))
             return "INVALID PLAIN TEXT";
         plainText = this.fillString(plainText);
         //parse each chunk separately
         String cipherText = new String();
-        for(int ct = 0; ct <= plainText.length() - encryptionKey.size() ; ct += encryptionKey.size() ){
+        for(int ct = 0; ct < plainText.length(); ct += encryptionKey.size() ){
             for(int ctEncryptionKey = 0; ctEncryptionKey < encryptionKey.size(); ctEncryptionKey ++){
                 cipherText += plainText.charAt(ct + encryptionKey.get(ctEncryptionKey));
             }

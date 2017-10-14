@@ -2,12 +2,12 @@
 #include "SuperMarket.h"
 #include <iostream>
 #include <thread>
-claSuperMarket::SuperMarket()
+SuperMarket::SuperMarket()
 {
 	this->money = 1000000;
-	this->addProduct("Mar", 10, 0);
-	this->addProduct("Portocala", 16, 1);
-	this->addProduct("Bicicleta", 40, 2);
+	this->addProduct("Mere", 10, 0);
+	this->addProduct("Portocale", 16, 1);
+	this->addProduct("Biciclete", 40, 2);
 	this->addProduct("Ferestre", 30, 3);
 
 	this->buyProduct(0, 100);
@@ -24,8 +24,7 @@ SuperMarket::SuperMarket(std::vector<Product> products)
 
 void SuperMarket::addProduct(std::string name, int price, int id)
 {
-	Product myProd(id, price, name);
-	this->products.push_back(myProd);
+	this->products.push_back(Product(id, price, name)); 
 }
 
 void SuperMarket::sellProduct(int id, int quantity)
@@ -64,9 +63,10 @@ void SuperMarket::sellOrder(std::vector <std::pair<int, int>> comanda)
 {
 	std::vector<std::thread> threadVector = std::vector<std::thread>();
 	for (int i = 0; i < threadVector.size(); i ++) {
-		std::thread myThread([SuperMarket] {sellProduct(comanda[i].first, comanda[i].second)});
-		threadVector.push_back(myThread);
+		std::thread myThread(&SuperMarket::sellProduct,this, comanda[i].first, comanda[i].second);
+		threadVector.push_back(move(myThread));
 	}
+	
 	while (threadVector.size() > 0) {
 		threadVector.back().join();
 		threadVector.pop_back();
