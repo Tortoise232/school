@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<head>
+		<link rel="stylesheet" href="styles.css" type="text/css"/>
+		<script type="text/javascript">
+			var xmlhttp;
+			$(document).ready(function() {
+				xmlhttp=GetXmlHttpObject(); 
+				if (xmlhttp==null)  {
+					alert ("Your browser does not support XMLHTTP!");
+					return;
+				}
+				var url="showNews.php";
+				//url=url+"?q="+str;
+				//url=url+"&sid="+Math.random();
+				xmlhttp.onreadystatechange=stateChanged;
+				xmlhttp.open("GET",url,true);
+				xmlhttp.send(null);
+			});
+			function stateChanged() {
+				if (xmlhttp.readyState==4) {
+				      alert(xmlhttp.responseText);
+				      document.getElementById("maindiv").innerHTML=xmlhttp.responseText;
+				}
+			}
+			function GetXmlHttpObject() {
+				if (window.XMLHttpRequest) {        // code for IE7+, Firefox, Chrome, Opera, Safari
+					return new XMLHttpRequest();
+				}
+			        if (window.ActiveXObject) {         // code for IE6, IE5
+					return new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				return null;
+			}
+		 	function filter(){
+				var currentCategory = document.getElementById("mySelect").value;
+				var currentDate = document.getElementById("date").value;
+				$.get("showNewsCategory.php", {category : currentCategory,date : currentDate},					
+						function(data,status) {
+						$("#maindiv").html(data);
+					});
+				//var x = document.getElementById("mySelect").value;
+    		//document.getElementById("maindiv").innerHTML = "You selected: " + x;
+			}
+		</script>
+	</head>
+	<body>
+		Category: 
+		<select id="mySelect" onchange="filter()">
+			<option value="allnews">All News</option>
+	    <option value="international">International</option>
+	    <option value="world">World</option>
+			<option value="technology">Technology</option>
+	  </select>
+		Date: <input id="date" onchange="filter()">
+		<p>News:</p>
+		<div id="maindiv"></div>
+		<div id="logindiv">
+			<h1>Login</h1>
+      <form method="post" action="login.php">
+        <p><input type="text" name="username" value="" placeholder="Username"></p>
+        <p><input type="password" name="password" value="" placeholder="Password"></p>
+
+        <p class="submit"><input type="submit" name="commit" value="Login"></p>
+			</form>
+		</div>
+	</body>
+</html>

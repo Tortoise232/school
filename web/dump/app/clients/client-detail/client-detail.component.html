@@ -1,0 +1,43 @@
+<form (ngSubmit)="save(client.firstName, client.lastName, client.email, client.address)" >
+    <div *ngIf="client">
+        <h2>{{client.firstName}} client details</h2>
+        <div class="form-group has-feedback"
+             [ngClass]="{ 'has-error' : !firstNameControl.valid && submitAttempt }">
+            <label class="control-label" >First Name:</label>
+            <div class="data">{{client.firstName}}</div>
+            <input type="text"
+                   name="firstName" [(ngModel)]="client.firstName" #firstNameControl="ngModel" placeholder="First Name" required>
+            <span *ngIf="!firstNameControl.valid && submitAttempt"
+                  class="glyphicon glyphicon-remove form-control-feedback" ></span>
+        </div>
+        <div class="form-group has-feedback"
+             [ngClass]="{ 'has-error' : !lastNameControl.valid && submitAttempt }">
+            <label class="control-label">Last Name:</label>
+            <div class="data">{{client.lastName}}</div>
+            <input type="text"
+                   name="lastName" [(ngModel)]="client.lastName" #lastNameControl="ngModel" placeholder="Last Name" required>
+            <span *ngIf="!lastNameControl.valid && submitAttempt"
+                  class="glyphicon glyphicon-remove form-control-feedback" ></span>
+        </div>
+        <div class="form-group has-feedback"
+             [ngClass]="{ 'has-error' : !emailControl.valid && submitAttempt }">
+            <label class="control-label">E-mail:</label>
+            <div class="data">{{client.email}}</div>
+            <input type="text"
+                   name="email" [(ngModel)]="client.email" #emailControl="ngModel" required placeholder="email" type="email">
+            <span *ngIf="!emailControl.valid && submitAttempt"
+                  class="glyphicon glyphicon-remove form-control-feedback" ></span>
+        </div>
+        <div class="form-group has-feedback"
+             [ngClass]="{ 'has-error' : !addressControl.valid && submitAttempt }">
+            <label class="control-label">Address:</label>
+            <div class="data">{{client.address}}</div>
+            <input type="text"
+                   name="address" [(ngModel)]="client.address" #addressControl="ngModel" placeholder="address" required>
+            <span *ngIf="!addressControl.valid && submitAttempt"
+                  class="glyphicon glyphicon-remove form-control-feedback" ></span>
+        </div>
+        <button type="submit" class="btn btn-default" (click)=initSave()>Save</button>
+    </div>
+    <button class="btn btn-default" (click)="goBack()">Back</button>
+</form>

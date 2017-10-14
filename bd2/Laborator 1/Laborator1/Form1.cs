@@ -25,7 +25,8 @@ namespace Laborator1
         string database = ConfigurationManager.AppSettings["database"];
         string parent = ConfigurationManager.AppSettings["parent"];
         string child = ConfigurationManager.AppSettings["child"];
-        string sharedColumn = ConfigurationManager.AppSettings["column"];
+        string parentColumn = ConfigurationManager.AppSettings["parentColumn"];
+        string childColumn = ConfigurationManager.AppSettings["childColumn"];
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -70,6 +71,8 @@ namespace Laborator1
 
             dataAdapterEmployees.Fill(dataSet, parent);
             dataAdapterAddresses.Fill(dataSet, child);
+
+            //change setting and turn these off
             dataAdapterDepartments.Fill(dataSet, "DEPARTMENTS");
             dataAdapterAcquisitions.Fill(dataSet, "ACQUISITIONS");
 
@@ -83,41 +86,47 @@ namespace Laborator1
             bindingSourceAddresses = new BindingSource();
             bindingSourceAcquisitions = new BindingSource();
 
-            
-            dataSet.Relations.Add(new DataRelation("FK_D_A",
-               dataSet.Tables["DEPARTMENTS"].Columns["ID"],
-               dataSet.Tables["ACQUISITIONS"].Columns["Department_ID"]));
-
             dataSet.Relations.Add(new DataRelation("FK_E_A",
-                 dataSet.Tables[parent].Columns[sharedColumn],
-                 dataSet.Tables[child].Columns[sharedColumn]));
-
-            dataSet.Relations.Add(new DataRelation("FK_D_E",
-               dataSet.Tables["DEPARTMENTS"].Columns["ID"],
-               dataSet.Tables["EMPLOYEES"].Columns["DepartmentID"]));
-
-
-            bindingSourceDepartments.DataSource = dataSet;
-            bindingSourceDepartments.DataMember = "DEPARTMENTS";
-            departmentsGrid.DataSource = bindingSourceDepartments;
+                 dataSet.Tables[parent].Columns[parentColumn],
+                 dataSet.Tables[child].Columns[childColumn]));
 
             bindingSourceEmployees.DataSource = dataSet;
             bindingSourceEmployees.DataMember = parent;
             employeesGrid.DataSource = bindingSourceEmployees;
 
+            bindingSourceAddresses.DataSource = bindingSourceEmployees;
+            bindingSourceAddresses.DataMember = "FK_E_A";
+            addressGrid.DataSource = bindingSourceAddresses;
+
+            //turn these off
+
+            dataSet.Relations.Add(new DataRelation("FK_D_A",
+               dataSet.Tables["DEPARTMENTS"].Columns["DID"],
+               dataSet.Tables["ACQUISITIONS"].Columns["DID"]));
+
+            dataSet.Relations.Add(new DataRelation("FK_D_E",
+               dataSet.Tables["DEPARTMENTS"].Columns["DID"],
+               dataSet.Tables["EMPLOYEES"].Columns["DID"]));
+               
+            bindingSourceDepartments.DataSource = dataSet;
+            bindingSourceDepartments.DataMember = "DEPARTMENTS";
+            departmentsGrid.DataSource = bindingSourceDepartments;
+
+            
             bindingSourceAcquisitions.DataSource = bindingSourceDepartments;
             bindingSourceAcquisitions.DataMember = "FK_D_A";
             acquisitionGrid.DataSource = bindingSourceAcquisitions;
+            
 
-           bindingSourceAddresses.DataSource = bindingSourceEmployees;
-           bindingSourceAddresses.DataMember = "FK_E_A";
-           addressGrid.DataSource = bindingSourceAddresses; 
+
         }
 
         private void Update_Click(object sender, EventArgs e)
         {
             dataAdapterEmployees.Update(dataSet.Tables[parent]);
             dataAdapterAddresses.Update(dataSet.Tables[child]);
+            dataAdapterEmployees.Update(dataSet.Tables["DEPARTMENTS"]);
+            dataAdapterAddresses.Update(dataSet.Tables["ACQUISITIONS"]);
         }
 
     }

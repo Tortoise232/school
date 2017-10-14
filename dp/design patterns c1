@@ -1,0 +1,7 @@
+design patterns c1
+SOLID PRINCIPLES:
+	Single princicle Responsibility - a class or module should have one, and only one reason to change;
+	Open/Closed - software entities should be open for extention but closed for modification
+	Liskov substitution principle
+	Interface Segregation principle
+	Depencency Inversion

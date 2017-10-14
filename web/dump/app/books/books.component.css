@@ -1,0 +1,22 @@
+a {
+    margin-top: 20px;
+    text-decoration: none;
+    font-family: Arial;
+    background-color: #eee;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer; cursor: hand;
+}
+a:hover {
+    background-color: #cfd8dc;
+}
+a:disabled {
+    background-color: #eee;
+    color: #ccc;
+    cursor: auto;
+}
+
+a:visited, a:link {
+    color: #607D8B;
+}

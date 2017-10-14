@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js">
+</script>
+	<head>
+		<link rel="stylesheet" href="styles.css" type="text/css"/>
+		<script type="text/javascript">
+			var xmlhttp;
+			$(document).ready(function() {
+				xmlhttp=GetXmlHttpObject(); 
+				if (xmlhttp==null)  {
+					alert ("Your browser does not support XMLHTTP!");
+					return;
+				}
+				var url="showNews.php";
+				//url=url+"?q="+str;
+				//url=url+"&sid="+Math.random();
+				xmlhttp.onreadystatechange=stateChanged;
+				xmlhttp.open("GET",url,true);
+				xmlhttp.send(null);
+			});
+			function stateChanged() {
+				if (xmlhttp.readyState==4) {
+				      alert(xmlhttp.responseText);
+				      document.getElementById("maindiv").innerHTML=xmlhttp.responseText;
+				}
+			}
+			function GetXmlHttpObject() {
+				if (window.XMLHttpRequest) {        // code for IE7+, Firefox, Chrome, Opera, Safari
+					return new XMLHttpRequest();
+				}
+			        if (window.ActiveXObject) {         // code for IE6, IE5
+					return new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				return null;
+			}
+      function addNews(){
+				$.get("addNews.php", {title:document.getElementById("addTitle").value,
+				username:document.getElementById("addUser").value,
+				category:document.getElementById("addCategory").value,
+				text:document.getElementById("addText").value},					
+						function(data,status) {
+						$("#maindiv").html(data);
+					});
+      }
+      function updateNews(){
+				$.get("updateNews.php", {id:document.getElementById("addId").value,
+				title:document.getElementById("addTitle").value,
+				user:document.getElementById("addUser").value,
+				category:document.getElementById("addCategory").value,
+				text:document.getElementById("addText").value},					
+						function(data,status) {
+						$("#maindiv").html(data);
+					});
+      }
+		</script>
+	</head>
+	<body>
+		News:
+		<div id="maindiv"></div>
+		<p><input id="addId" placeholder="Id"></p>
+		<p><input id="addTitle" placeholder="Title"></p>
+		<p><input id="addUser" placeholder="Your username"></p>
+		<p><input id="addCategory" placeholder="Category"></p>
+		<p><input id="addText" placeholder="Text"></p>
+
+		<button type="button" onclick="addNews()">Add</button>
+		<button type="button" onclick="updateNews()">Update</button>
+		</div>
+	</body>
+</html>

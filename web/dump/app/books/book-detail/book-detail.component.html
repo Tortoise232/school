@@ -1,0 +1,68 @@
+<!--<div *ngIf="book">-->
+    <!--<h2>Book {{book.name}} details</h2>-->
+    <!--<div>-->
+        <!--<label>Title: </label>-->
+        <!--<div class="data">{{book.title}}</div>-->
+        <!--<input [(ngModel)]="book.title" placeholder="title">-->
+    <!--</div>-->
+    <!--<div>-->
+        <!--<label>Author: </label>-->
+        <!--<div class="data">{{book.author}}</div>-->
+        <!--<input [(ngModel)]="book.author" placeholder="author">-->
+    <!--</div>-->
+    <!--<div>-->
+        <!--<label>Genre: </label>-->
+        <!--<div class="data">{{book.genre}}</div>-->
+        <!--<input [(ngModel)]="book.genre" placeholder="genre">-->
+    <!--</div>-->
+    <!--<div>-->
+        <!--<label>Price: </label>-->
+        <!--<div class="data">{{book.price}}</div>-->
+        <!--<input [(ngModel)]="book.price" placeholder="price">-->
+    <!--</div>-->
+    <!--<button (click)="goBack()">Back</button>-->
+    <!--<button (click)="save(book.title, book.author, book.genre, book.price)">Save</button>-->
+<!--</div>-->
+<form (ngSubmit)="save(book.title, book.author, book.genre, book.price)" >
+<div *ngIf="book">
+    <h2>"{{book.title}}" book details</h2>
+    <div class="form-group has-feedback"
+         [ngClass]="{ 'has-error' : !titleControl.valid && submitAttempt }">
+        <label class="control-label" >Title:</label>
+        <div class="data">{{book.title}}</div>
+        <input type="text"
+               name="title" [(ngModel)]="book.title" #titleControl="ngModel" placeholder="title" required>
+        <span *ngIf="!titleControl.valid && submitAttempt"
+              class="glyphicon glyphicon-remove form-control-feedback" ></span>
+    </div>
+    <div class="form-group has-feedback"
+         [ngClass]="{ 'has-error' : !authorControl.valid && submitAttempt }">
+        <label class="control-label" >Author:</label>
+        <div class="data">{{book.author}}</div>
+        <input type="text"
+               name="author" [(ngModel)]="book.author" #authorControl="ngModel" placeholder="author" required>
+        <span *ngIf="!authorControl.valid && submitAttempt"
+              class="glyphicon glyphicon-remove form-control-feedback" ></span>
+    </div>
+    <div class="form-group has-feedback"
+         [ngClass]="{ 'has-error' : !genreControl.valid && submitAttempt }">
+        <label class="control-label" >Genre:</label>
+        <div class="data">{{book.genre}}</div>
+        <input type="text"
+               name="genre" [(ngModel)]="book.genre" #genreControl="ngModel" placeholder="genre" required>
+        <span *ngIf="!genreControl.valid && submitAttempt"
+              class="glyphicon glyphicon-remove form-control-feedback" ></span>
+    </div>
+    <div class="form-group has-feedback"
+         [ngClass]="{ 'has-error' : !priceControl.valid && submitAttempt }">
+        <label class="control-label" >Price:</label>
+        <div class="data">{{book.price}}</div>
+        <input type="number"
+               name="price" [(ngModel)]="book.price" #priceControl="ngModel" placeholder="price"  min="0" step="0.01" required>
+        <span *ngIf="!priceControl.valid && submitAttempt"
+              class="glyphicon glyphicon-remove form-control-feedback" ></span>
+    </div>
+    <button type="submit" class="btn btn-default" (click)=initSave()>Save</button>
+</div>
+<button class="btn btn-default" (click)="goBack()">Back</button>
+</form>

@@ -1,0 +1,13 @@
+<h2>Clients</h2>
+<button class="create" (click)="create()">Add</button>
+<br>
+<br>
+<ol class="clients">
+  <li *ngFor="let client of clients "
+      [class.selected]="client === selectedClient"
+      (click)="onSelect(client);gotoDetail()">
+    {{client.name}}
+    <button class="delete"
+            (click)="delete(client); $event.stopPropagation()">x</button>
+  </li>
+</ol>

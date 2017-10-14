@@ -1,0 +1,48 @@
+<h2>Buy Books</h2>
+<div style="width: 25%">
+    <!--<form novalidate (ngSubmit)="loadBooks(clientEmailControl.value)"  > -->
+    <form (ngSubmit)="loadBooks(clientEmailControl.value)"  >
+        <div class="form-group has-feedback"
+             [ngClass]="{ 'has-error' : !clientEmailControl.valid && saveAttempt }">
+            <label class="control-label" >Client Email Address</label>
+            <input type="text" class="form-control"
+                   name="email" [(ngModel)]="email" #clientEmailControl="ngModel" required type="email">
+            <span *ngIf="!clientEmailControl.valid && saveAttempt"
+                  class="glyphicon glyphicon-remove form-control-feedback" ></span>
+            <span *ngIf="clientEmailControl.valid && noClientWithThatMail && saveAttempt"
+                  class="glyphicon glyphicon-remove form-control-feedback" >E-mail not used!</span>
+        </div>
+        <button type="submit" class="btn btn-default" (click)=initSave()>Next</button>
+    </form>
+    <button class="btn btn-default" (click)="goBack()">Back</button>
+</div>
+
+
+<div *ngIf="showBooks">
+    <div>
+        <h3>Selected Books (click to remove):</h3>
+        <ol>
+            <li *ngFor="let book of selectedBooks"
+                (click)="removeSelectedBook(book)">
+                {{book.title}}
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div *ngIf="showBooks">
+    <div>
+        <h3>Available books (click to select):</h3>
+        <ol>
+            <li *ngFor="let book of availableBooks"
+                (click)="selectBook(book)">
+                {{book.title}}
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div *ngIf="showBooks">
+    <button (click)="save()">Save</button>
+</div>
+

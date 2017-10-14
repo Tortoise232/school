@@ -1,0 +1,4 @@
+design patterns course 2
+
+adapter pattern
+bridge pattern -> actually means that your interface will have another abstract class inside it so you can replace the abstract class with different ones without modifying the interface :O
