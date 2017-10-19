@@ -4,21 +4,21 @@
 #include <stdio.h>
 #include "stdafx.h"
 #include "SuperMarket.h"
-
+#include <stdlib.h>
 int main()
 {
 	int x = 0;
 	SuperMarket myMarket;
-	std::vector<std::pair<int, int>> vectorOfOrders;
-	vectorOfOrders.push_back({ 0, 5 });
-	vectorOfOrders.push_back({ 1, 14 });
-	vectorOfOrders.push_back({ 0, 35 });
-	vectorOfOrders.push_back({ 3, 20 });
-	vectorOfOrders.push_back({ 0, 20 });
-	vectorOfOrders.push_back({ 0, 40 });
-	vectorOfOrders.push_back({ 3, 59 });
-	myMarket.sellOrder(vectorOfOrders);
-	scanf_s("%d", x);
+	while (true) {
+		std::vector<std::pair<int, int>> vectorOfSells, vectorOfBuys;
+		for (int i = 0; i < 4; i++) {
+			vectorOfSells.push_back({ rand() % 4, rand() % 100 + 1 });
+			vectorOfBuys.push_back({ rand() % 4, rand() % 100 + 1 });
+		}
+		myMarket.sellOrder(vectorOfSells);
+		myMarket.buyOrder(vectorOfBuys);
+		std::this_thread::sleep_for(std::chrono::seconds(5));
+	}
     return 0;
 }
 

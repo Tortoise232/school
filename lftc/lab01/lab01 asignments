@@ -1,0 +1,6 @@
+operatori: + - * / %
+assignment: = 
+input/output = sup() yo()
+conditional = maybe() beibi()
+loop = hoola()
+

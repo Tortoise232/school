@@ -7,6 +7,7 @@ class SuperMarket
 private:
 	std::vector<Product> products = std::vector<Product>();
 	std::mutex& mmmoneymutex = std::mutex();
+	std::vector<int> amountOfSoldProducts;
 	int money;
 public:
 	SuperMarket();
