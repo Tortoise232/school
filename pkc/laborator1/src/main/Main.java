@@ -41,18 +41,18 @@ public class Main extends Application {
     public void setUpShop(Stage primaryStage){
 
         GridPane programStateGrid = new GridPane();
-        this.alphabet = new TextField("abcdefghijklmnopqrstuvxyz .,!?");
+        this.alphabet = new TextField("abcdefghijklmnopqrstuvxyz .,!?_");
         this.plaintText = new TextField("message");
         this.cipher = new TextField("");
-        this.encryptionkey = new TextField("//not functional yet");
+        this.encryptionkey = new TextField("0");
         this.hackingTime = new Button("IT'S HACKING TIME");
         this.unhackingTime = new Button("IT'S UNHACKING TIME");
         this.hackingTime.setOnAction(e -> {
-            this.elliot = new PermutationCrypter(new ArrayList<Integer>(Arrays.asList(2,1,0)), this.alphabet.getText());
+            this.elliot = new PermutationCrypter(convertEncryptionKey(this.encryptionkey.getText()), this.alphabet.getText());
             this.cipher.setText(this.elliot.crypt(this.plaintText.getText()));
         });
         this.unhackingTime.setOnAction(e -> {
-            this.elliot = new PermutationCrypter(new ArrayList<Integer>(Arrays.asList(2,1,0)), this.alphabet.getText());
+            this.elliot = new PermutationCrypter(convertEncryptionKey(this.encryptionkey.getText()), this.alphabet.getText());
             this.cipher.setText(this.elliot.decrypt(this.plaintText.getText()));
         });
 
@@ -68,5 +68,26 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+
+    public static ArrayList<Integer> convertEncryptionKey(String candidate){
+        System.out.println(candidate);
+        int max = 0;
+        ArrayList<Integer> result = new ArrayList<>();
+        for(int i=0; i < candidate.length(); i++){
+            if(candidate.charAt(i) >= '0' && candidate.charAt(i) <= '9') {
+                int number = Character.getNumericValue(candidate.charAt(i));
+                result.add(number);
+                max = (number > max) ? number : max;
+            }
+        }
+        boolean isResultValid = true;
+        for(int i = 0; i < max; i ++){
+            if(!result.contains(i))
+                isResultValid = false;
+        }
+        System.out.println(result);
+        return (isResultValid) ? result : null;
     }
 }
