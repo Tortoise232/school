@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -44,26 +45,33 @@ public class Main extends Application {
         this.alphabet = new TextField("abcdefghijklmnopqrstuvxyz .,!?_");
         this.plaintText = new TextField("message");
         this.cipher = new TextField("");
-        this.encryptionkey = new TextField("0");
+        this.encryptionkey = new TextField("");
         this.hackingTime = new Button("IT'S HACKING TIME");
         this.unhackingTime = new Button("IT'S UNHACKING TIME");
         this.hackingTime.setOnAction(e -> {
+            if(convertEncryptionKey(this.encryptionkey.getText()) == null)
+                return;
             this.elliot = new PermutationCrypter(convertEncryptionKey(this.encryptionkey.getText()), this.alphabet.getText());
+
             this.cipher.setText(this.elliot.crypt(this.plaintText.getText()));
+
         });
         this.unhackingTime.setOnAction(e -> {
+            if(convertEncryptionKey(this.encryptionkey.getText()) == null)
+                return;
             this.elliot = new PermutationCrypter(convertEncryptionKey(this.encryptionkey.getText()), this.alphabet.getText());
-            this.cipher.setText(this.elliot.decrypt(this.plaintText.getText()));
+            this.plaintText.setText(this.elliot.decrypt(this.cipher.getText()).replace('_',' '));
         });
 
         ImageView hkmView = new ImageView(hkm);
-        hkmView.setFitHeight(200);
-        hkmView.setFitWidth(200);
+        hkmView.setFitHeight(100);
+        hkmView.setFitWidth(300);
+        programStateGrid.setAlignment(Pos.CENTER);
         programStateGrid.addRow(0, new Label("message:"), this.plaintText, this.hackingTime);
         programStateGrid.addRow(1, new Label("encryption key:"), this.encryptionkey, this.unhackingTime);
         programStateGrid.addRow(2, new Label("result:"), this.cipher);
         programStateGrid.addRow(10, new Label("an hero:"), hkmView);
-        primaryStage.setScene(new Scene(programStateGrid, 640, 480));
+        primaryStage.setScene(new Scene(programStateGrid, 640, 240));
     }
 
     public static void main(String[] args) {
@@ -78,14 +86,25 @@ public class Main extends Application {
         for(int i=0; i < candidate.length(); i++){
             if(candidate.charAt(i) >= '0' && candidate.charAt(i) <= '9') {
                 int number = Character.getNumericValue(candidate.charAt(i));
+                if(result.contains(number))
+                    continue;
                 result.add(number);
                 max = (number > max) ? number : max;
             }
         }
         boolean isResultValid = true;
+        if(max == 0){
+            result.add(2);
+            result.add(0);
+            result.add(1);
+            return result;
+        }
         for(int i = 0; i < max; i ++){
-            if(!result.contains(i))
+            if(!result.contains(i)) {
                 isResultValid = false;
+                PermutationCrypter.alert("Invalid encryption key!");
+                break;
+            }
         }
         System.out.println(result);
         return (isResultValid) ? result : null;

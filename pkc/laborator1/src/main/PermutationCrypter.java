@@ -1,6 +1,10 @@
 package main;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
 import java.util.ArrayList;
+import java.util.Optional;
 
 /**
  * Created by Petean Mihai on 10/13/2017.
@@ -52,11 +56,20 @@ public class PermutationCrypter {
         return true;
     }
 
+    public static void alert(String text){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error");
+        alert.setHeaderText("Validation Problem:");
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
+
     public String decrypt(String plainText){
         String cipherText = new String();
         plainText = plainText.toLowerCase();
-        if(!this.checkText(plainText))
-            return "INVALID CIPHER TEXT";
+        if(!this.checkText(plainText)){
+            this.alert("Invalid plain text!");
+        }
         plainText = this.fillString(plainText);
         ArrayList<Integer> inverseKey = new ArrayList<>(encryptionKey);
         for(int ct=0; ct < this.encryptionKey.size(); ct++){
@@ -70,9 +83,12 @@ public class PermutationCrypter {
         return cipherText.toLowerCase();
     }
 
+    //performs
     public String crypt(String plainText){
-        if(!this.checkText(plainText))
-            return "INVALID PLAIN TEXT";
+        if(!this.checkText(plainText)) {
+            this.alert("Invalid plain text");
+            return "";
+        }
         plainText = this.fillString(plainText);
         //parse each chunk separately
         String cipherText = new String();

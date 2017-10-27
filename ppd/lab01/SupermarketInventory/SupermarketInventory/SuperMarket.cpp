@@ -50,14 +50,16 @@ void SuperMarket::sellProduct(int id, int quantity)
 {
 	for (int i = 0; i < products.size(); i ++) {
 		if (products[i].getID() == id) {
-			this->mmmoneymutex.lock();
+			
 			if (products[i].removeQuantity(quantity)) {//transaction went ok
-				std::cout << "I just sold " << quantity << " of " << products[i].getID() << " for " << quantity * products[i].getPrice()  << "\n";
+				this->mmmoneymutex.lock();
+				std::cout << "I just sold " << quantity << " of " << products[i].getID() << " for " << quantity * products[i].getPrice() << "\n";
 				money += quantity * products[i].getPrice();
+				this->mmmoneymutex.unlock();
 			}
 			else
 				std::cout << "I couldn't sell " << quantity << " of " << products[i].getID() << "out of my total " << products[i].getQuantity()  << "\n";
-			this->mmmoneymutex.unlock();
+			
 		}
 	}
 }
