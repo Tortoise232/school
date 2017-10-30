@@ -10,14 +10,17 @@
 #include<thread>
 #include<vector>
 
-#define LIMIT 3
-#define MAXNR 10
+#define PRINT_MATRIX false
+#define LIMIT 1000
+#define MAXNR 1000
 //lazy globals fam
 int a[LIMIT][LIMIT];
 int b[LIMIT][LIMIT];
 int c[LIMIT][LIMIT];
 
 void printMatrix() {
+	if (!PRINT_MATRIX)
+		return;
 	std::cout << "MATRIX A: \n";
 	for (int i = 0; i < LIMIT; i++) {
 		for (int j = 0; j < LIMIT; j++)
@@ -46,14 +49,7 @@ void sumLine(int line) {
 	}
 }
 
-void producLine(int row) {
-	int sum = 0;
-	for (int line = 0; line < LIMIT; line++) {
-		for (int i = 0; i < LIMIT; i++)
-			sum += a[line][i] * b[i][row];
-		c[line][row] = sum;
-	}
-}
+
 
 void threadingSum() {
 	std::vector<std::thread> threadVector = std::vector<std::thread>();
@@ -74,7 +70,18 @@ void sequentialSum() {
 			c[i][j] = a[i][j] + b[i][j];
 }
 
-//bad bad bad
+void producLine(int row) {
+	int sum;
+	for (int column = 0; column < LIMIT; column++) {
+		sum = 0;
+		for (int i = 0; i < LIMIT; i++){
+			sum += a[row][i] * b[i][column];
+		c[row][column] = sum;
+		}
+	}
+}
+
+
 void threadingProduct() {
 	std::vector<std::thread> threadVector = std::vector<std::thread>();
 	for(int i = 0; i < LIMIT; i ++){
@@ -92,8 +99,7 @@ void sequentialProduct() {
 		for (int j = 0; j < LIMIT; j++) {
 			int sum = 0;
 			for (int ii = 0; ii < LIMIT; ii++)
-				for (int jj = 0; jj < LIMIT; jj++)
-					sum += a[i][jj] * b[ii][j];
+					sum += a[i][ii] * b[ii][j];
 			c[i][j] = sum;
 		}
 }
