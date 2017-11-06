@@ -1,0 +1,30 @@
+student:
+	courses;
+	submissions;
+	id,name, etc.
+
+teacher:
+	courses;
+	id, name, etc.
+
+courses:
+	enrolled students;
+	assignments;
+	enrollment deadline;
+	description, other details;
+	list of reviews;
+
+submission:
+		grade;
+		assigned student;
+		assignment;
+
+assignment:
+	deadline;
+	course;
+	submissions;
+
+review;
+	student;
+	rating;
+	description;

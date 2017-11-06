@@ -1,0 +1,23 @@
+funcitonalitati:
+	student:
+		create user
+		add user
+		update user
+		read user
+		enroll in course
+		un-enroll from course
+		review course
+		view assignments
+		complete assignment
+	teacher:---
+		get students (enrolled in a certain course) 
+		add course
+		remove course
+		update course
+		read course
+		create course
+		create assignment
+		evaluate assignments
+
+
+
