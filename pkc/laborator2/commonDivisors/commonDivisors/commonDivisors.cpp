@@ -8,6 +8,7 @@
 #include <limits.h>
 #include <vector>
 #include "InfInt.h"
+#define DO_CUSTOM_NUMBERS true
 #define PRINT false
 #define NUMBER_OF_RUNS 10
 #define NUMBER_OF_DIGITS 50
@@ -160,8 +161,26 @@ int runBinary(int runs, int nrOfDigits) {
 }
 
 
+void runFor2Numbers() {
+	std::string a;
+	std::string b;
+	std::cout << "first number: ";
+	std::cin >> a;
+	std::cout << "second number: ";
+	std::cin >> b;
+	InfInt ia = a.c_str();
+	InfInt ib = b.c_str();
+	std::cout << "Binary GCD: " << gcdBinaryBIG(ia, ib) << "\n";
+	std::cout << "Extended Euclidian GCD: " << gcdExtendedEuclidianBIG(ia, ib) << "\n";
+	std::cout << "Euclidian Division GCD: " << gcdEuclidDivisionBIG(ia, ib) << "\n";
+
+}
+
+
 int main()
 {
+	while(DO_CUSTOM_NUMBERS)
+		runFor2Numbers();
 	std::cout << "Running on " << NUMBER_OF_RUNS << " iterations\n";
 	for (int digit_count = 1; digit_count < 40; digit_count++){
 		std::cout << "Running for " << digit_count << " digits: "
