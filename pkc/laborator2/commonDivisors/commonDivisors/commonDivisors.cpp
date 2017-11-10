@@ -7,28 +7,48 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <vector>
-
+#include "InfInt.h"
 #define PRINT false
-#define NUMBER_OF_RUNS 1000000
+#define NUMBER_OF_RUNS 10
+#define NUMBER_OF_DIGITS 50
 
-unsigned long gcdEuclidDivision(unsigned long a, unsigned long b) {
-	while (a && b && a % b != 0) {
-		a > b ? a %= b : b %= a;
-	}
-	return b > 0 ?  b : a;
+
+std::chrono::milliseconds getStamp() {
+	return std::chrono::duration_cast< std::chrono::milliseconds >(
+		std::chrono::system_clock::now().time_since_epoch());
 }
 
-unsigned long gcdEuclidDiff(unsigned long a, unsigned long b) {
-	while (a && b && a != b) {
+
+
+std::string generateInfInt(int nrOfDigits) {
+	std::string number = "";
+	for (int i = 0; i < nrOfDigits; i++) {
+		number += rand() % 10 + 48;
+	}
+	//std::cout << number << " ";
+	return number;
+}
+
+
+
+InfInt gcdEuclidDivisionBIG(InfInt a, InfInt b) {
+	while (a > 0 && b > 0 && a % b != 0) {
+		a > b ? a %= b : b %= a;
+	}
+	return b > 0 ? b : a;
+}
+
+InfInt gcdEuclidDiffBIG(InfInt a, InfInt b) {
+	while (a > 0 && b > 0 && a != b) {
 		a > b ? a -= b : b -= a;
 	}
 	return b > 0 ? b : a;
 }
 
-unsigned long gcdExtendedEuclidian(unsigned long a, unsigned long b) {
-	unsigned long u, u1 = 0, u2 = 1;
-	unsigned long v, v1 = 1, v2 = 0;
-	unsigned long q, r, d = 1;
+InfInt gcdExtendedEuclidianBIG(InfInt a, InfInt b) {
+	InfInt u, u1 = 0, u2 = 1;
+	InfInt v, v1 = 1, v2 = 0;
+	InfInt q, r, d = 1;
 	while (b > 0) {
 		q = a / b;
 		r = a - q * b;
@@ -47,79 +67,107 @@ unsigned long gcdExtendedEuclidian(unsigned long a, unsigned long b) {
 	return d;
 }
 
-unsigned long _LongRand()
+InfInt gcdBinaryBIG(InfInt u, InfInt v)
 {
+	// simple cases (termination)
+	if (u == v)
+		return u;
 
-	unsigned char MyBytes[4];
-	unsigned long MyNumber = 0;
-	unsigned char * ptr = (unsigned char *)&MyNumber;
+	if (u == 0)
+		return v;
 
-	MyBytes[0] = rand() % 256; //0-255
-	MyBytes[1] = rand() % 256; //256 - 65535
-	MyBytes[2] = rand() % 256; //65535 -
-	MyBytes[3] = rand() % 256; //16777216
+	if (v == 0)
+		return u;
 
-	memcpy(ptr + 0, &MyBytes[0], 1);
-	memcpy(ptr + 1, &MyBytes[1], 1);
-	memcpy(ptr + 2, &MyBytes[2], 1);
-	memcpy(ptr + 3, &MyBytes[3], 1);
-
-	return(MyNumber);
-}
-
-bool equalDigits(unsigned long a, unsigned long b) {
-	int cntA = 0, cntB = 0;
-	while (a || b) {
-		bool breakNow = a ? !b ? true : false : b ? true : false;
-		
-		if (breakNow)
-			return false;
-		a /= 10;
-		b /= 10;
+	// look for factors of 2
+	if (u % 2 == 0) // u is even
+	{
+		if (v % 2 ==  1) // v is odd
+			return gcdBinaryBIG(u / 2, v);
+		else // both u and v are even
+			return gcdBinaryBIG(u /2, v /2) * 2;
 	}
-	return true;
+
+	if (v % 2 == 0) // u is odd, v is even
+		return gcdBinaryBIG(u, v / 2);
+
+	// reduce larger argument
+	if (u > v)
+		return gcdBinaryBIG((u - v) / 2, v);
+
+	return gcdBinaryBIG((v - u) / 2, u);
 }
 
-std::vector<unsigned long> generateLongs() {
-	std::vector<unsigned long> arrai;
-	for (int i = 0; i < NUMBER_OF_RUNS; i++) {
-		unsigned long nr = 0;
-		while(!equalDigits(nr, std::numeric_limits<unsigned long>::max()))
-			nr = _LongRand();
-		arrai.push_back(nr);
-	}
-	return arrai;
-}
-
-std::chrono::milliseconds getStamp() {
-	return std::chrono::duration_cast< std::chrono::milliseconds >(
-		std::chrono::system_clock::now().time_since_epoch());
-}
-
-int runGCD(unsigned long(*function)(unsigned long, unsigned  long), std::vector<unsigned long> arrai) {
-	std::chrono::milliseconds timeStamp = getStamp();
-	for (int i = 0; i < NUMBER_OF_RUNS; i+= 2) {
+void bigNumberComparison(int runs, int nrOfDigits) {
+	for (int i = 0; i < runs; i++) {
+		InfInt a = generateInfInt(nrOfDigits).c_str();
+		InfInt b = generateInfInt(nrOfDigits).c_str();
 		if (PRINT)
-			std::cout << "a = " << arrai[i]
-			<< "; b = " << arrai[i + 1]
-			<< "; divisor: "
-			<< function(arrai[i], arrai[i + 1]) << "\n";
-		else
-			function(arrai[i], arrai[i + 1]);
+			std::cout << "a = " << a
+			<< "; b = " << b
+			<< "; divisor: \n"
+			<< "EuclidDivisionBig: " << gcdEuclidDivisionBIG(a, b) << " \n"
+			<< "EuclidDiffBig: " << gcdEuclidDiffBIG(a, b) << " \n"
+			<< "ExtendedEuclidBig: " << gcdExtendedEuclidianBIG(a, b) << " \n";
+	}
+}
+
+
+
+int runExtendedEuclidian(int runs, int nrOfDigits) {
+	std::chrono::milliseconds timeStamp = getStamp();
+	int generationTime = 0;
+	for (int i = 0; i < runs; i++) {
+		std::chrono::milliseconds generationAdjustement = getStamp();
+		InfInt a = generateInfInt(nrOfDigits).c_str();
+		InfInt b = generateInfInt(nrOfDigits).c_str();
+		generationAdjustement = getStamp() - generationAdjustement;
+		generationTime += generationAdjustement.count();
+		gcdExtendedEuclidianBIG(a, b);
 	}
 	timeStamp = getStamp() - timeStamp;
-	return timeStamp.count();
+	return timeStamp.count() - generationTime;
 }
+
+int runEuclidDivision(int runs, int nrOfDigits) {
+	std::chrono::milliseconds timeStamp = getStamp();
+	int generationTime = 0;
+	for (int i = 0; i < runs; i++) {
+		std::chrono::milliseconds generationAdjustement = getStamp();
+		InfInt a = generateInfInt(nrOfDigits).c_str();
+		InfInt b = generateInfInt(nrOfDigits).c_str();
+		generationAdjustement = getStamp() - generationAdjustement;
+		generationTime += generationAdjustement.count();
+		gcdEuclidDivisionBIG(a, b);
+	}
+	timeStamp = getStamp() - timeStamp;
+	return timeStamp.count() - generationTime;
+}
+
+int runBinary(int runs, int nrOfDigits) {
+	std::chrono::milliseconds timeStamp = getStamp();
+	int generationTime = 0;
+	for (int i = 0; i < runs; i++) {
+		std::chrono::milliseconds generationAdjustement = getStamp();
+		InfInt a = generateInfInt(nrOfDigits).c_str();
+		InfInt b = generateInfInt(nrOfDigits).c_str();
+		generationAdjustement = getStamp() - generationAdjustement;
+		generationTime += generationAdjustement.count();
+		gcdBinaryBIG(a, b);
+	}
+	timeStamp = getStamp() - timeStamp;
+	return timeStamp.count() - generationTime;
+}
+
 
 int main()
 {
-	std::vector<unsigned long> arrai = generateLongs();
-	std::cout << "Extended Euclidian:";
-	std::cout << runGCD(&gcdExtendedEuclidian, arrai) << "\n";
-	std::cout << "Euclidian (Division):";
-	std::cout << runGCD(&gcdEuclidDivision, arrai) << "\n";
-	std::cout << "Euclidian (Difference):";
-	std::cout << runGCD(&gcdEuclidDiff, arrai) << "\n";
+	std::cout << "Running on " << NUMBER_OF_RUNS << " iterations\n";
+	for (int digit_count = 1; digit_count < 40; digit_count++){
+		std::cout << "Running for " << digit_count << " digits: "
+		<< " EE: " << runExtendedEuclidian(NUMBER_OF_RUNS, digit_count)
+		<< " ED: " << runEuclidDivision(NUMBER_OF_RUNS, digit_count)
+		<< " B: " << runBinary(NUMBER_OF_RUNS, digit_count) << "\n";
+	}
 	return 0;
 }
-
