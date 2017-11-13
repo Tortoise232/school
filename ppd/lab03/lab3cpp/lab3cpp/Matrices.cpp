@@ -13,8 +13,9 @@
 #include<vector>
 
 #define PRINT_MATRIX false
-#define LIMIT 1000
-#define MAXNR 1000
+#define NUMBER_OF_THREADS 5
+#define LIMIT 100
+#define MAXNR 100
 //lazy globals fam
 int a[LIMIT][LIMIT];
 int b[LIMIT][LIMIT];
@@ -54,7 +55,7 @@ void sumLine(int line) {
 
 
 void threadingSum() {
-	ThreadPool threadPool(LIMIT);
+	ThreadPool threadPool(NUMBER_OF_THREADS);
 	for(int i = 0; i < LIMIT; i++){
 		threadPool.enqueue(sumLine, i);
 	}
@@ -80,21 +81,29 @@ void producLine(int row) {
 
 
 void threadingProduct() {
-	ThreadPool threadPool(LIMIT);
+	ThreadPool threadPool(NUMBER_OF_THREADS);
 	for(int i = 0; i < LIMIT; i ++){
 		threadPool.enqueue(producLine, i);
 		}
+	
 }
 
 void threadingProductAsync() {
+	std::vector<std::future<void>> results;
 	for (int i = 0; i < LIMIT; i++) {
-		std::async(producLine, i);
+		results.push_back(std::async(producLine, i));
 	}
+	for (int ct = 0; ct < results.size(); ct++)
+		results[ct].get();
 }
 
 void threadingSumAsync() {
-	for (int i = 0; i < LIMIT; i++)
-		std::async(sumLine, i);
+	std::vector<std::future<void>> results;
+	for (int i = 0; i < LIMIT; i++) {
+		results.push_back(std::async(sumLine, i));
+	}
+	for (int ct = 0; ct < results.size(); ct++)
+		results[ct].get();
 }
 
 void sequentialProduct() {
@@ -133,7 +142,7 @@ int main()
 	printMatrix();
 
 	timeStamp = getStamp();
-	threadingSum();
+	threadingSumAsync();
 	std::cout << "Async sum: " << (getStamp() - timeStamp).count() << " milliseconds\n";
 
 	printMatrix();
@@ -151,7 +160,7 @@ int main()
 	printMatrix();
 
 	timeStamp = getStamp();
-	threadingProduct();
+	threadingProductAsync();
 	std::cout << "Async product: " << (getStamp() - timeStamp).count() << " milliseconds\n";
 
 	printMatrix();

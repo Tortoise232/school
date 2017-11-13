@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.concurrent.Callable;
+
 /**
  * Created by Petean Mihai on 11/6/2017.
  */
@@ -19,22 +21,20 @@ public class ThreadWorker implements Runnable {
             sumLine(line);
     }
 
-    void producLine(int row) {
+    static void producLine(int row) {
         int sum;
-        for (int column = 0; column < Main.LIMIT; column++) {
+        for (int column = 0; column < Controller.LIMIT; column++) {
             sum = 0;
-            for (int i = 0; i < Main.LIMIT; i++){
-                sum += Main.a[row][i] * Main.b[i][column];
-                Main.c[row][column] = sum;
+            for (int i = 0; i < Controller.LIMIT; i++){
+                sum += Controller.a[row][i] * Controller.b[i][column];
+                Controller.c[row][column] = sum;
             }
         }
     }
 
-    void sumLine(int line) {
-        for (int i = 0; i < Main.LIMIT; i++) {
-            Main.c[line][i] = Main.a[line][i] + Main.b[line][i];
+    static void sumLine(int line) {
+        for (int i = 0; i < Controller.LIMIT; i++) {
+            Controller.c[line][i] = Controller.a[line][i] + Controller.b[line][i];
         }
     }
-
-
 }
