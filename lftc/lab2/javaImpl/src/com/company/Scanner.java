@@ -18,6 +18,45 @@ public class Scanner{
     private HashMap<String, Integer> constantSymbolTable = new HashMap<>();
     private BufferedReader fileReader;
 
+    public ArrayList<Tuple> getPif() {
+        return pif;
+    }
+
+    public void setPif(ArrayList<Tuple> pif) {
+        this.pif = pif;
+    }
+
+    public HashMap<String, Integer> getVariableSymbolTable() {
+        return variableSymbolTable;
+    }
+
+    public void setVariableSymbolTable(HashMap<String, Integer> variableSymbolTable) {
+        this.variableSymbolTable = variableSymbolTable;
+    }
+
+    public HashMap<String, Integer> getInstructionCodes() {
+        return instructionCodes;
+    }
+
+    public void setInstructionCodes(HashMap<String, Integer> instructionCodes) {
+        this.instructionCodes = instructionCodes;
+    }
+
+    public HashMap<String, Integer> getConstantSymbolTable() {
+        return constantSymbolTable;
+    }
+
+    public void setConstantSymbolTable(HashMap<String, Integer> constantSymbolTable) {
+        this.constantSymbolTable = constantSymbolTable;
+    }
+
+    public BufferedReader getFileReader() {
+        return fileReader;
+    }
+
+    public void setFileReader(BufferedReader fileReader) {
+        this.fileReader = fileReader;
+    }
 
     public boolean initInstructionCodesTable(String fileName) throws IOException {
         BufferedReader bufferedReader = fileReader = new BufferedReader(new FileReader(fileName)) ;
@@ -69,15 +108,16 @@ public class Scanner{
 
     //I AM PROUD OF THIS
     public String[] parseMissingSpaces(String[] line){
-        String[] result = null;
+        int length = 0;
+        String[] result = new String[100];
         for(String section: line)
             if(section.contains(",") && section.length() > 1) {
                 section.replace(",", " , ");
                 for(String subSection: section.split(" "))
-                    result[result.length] = subSection;
+                    result[length ++] = subSection;
             }
             else
-                result[result.length]  = section;
+                result[length ++]  = section;
         return result;
     }
 
@@ -95,6 +135,8 @@ public class Scanner{
         String[] splitLine = line.split(" ");
         splitLine = parseMissingSpaces(splitLine);
         for(String element: splitLine){
+            if(element == "" || element == null)
+                break;
             if(instructionCodes.containsKey(element))
                 pif.add(new Tuple(instructionCodes.get(element), 0));
             else
@@ -105,10 +147,12 @@ public class Scanner{
     }
 
     public void readFile() throws IOException {
-        String newStatement;
+        String newStatement = fileReader.readLine();
         do{
+            if(newStatement!= null)
+                parseLine(newStatement);
             newStatement = fileReader.readLine();
-            parseLine(newStatement);
+
         }while(newStatement != null);
     }
 

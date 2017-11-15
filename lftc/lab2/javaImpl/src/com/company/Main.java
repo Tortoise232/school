@@ -11,7 +11,10 @@ public class Main {
         Scanner myScanner = new Scanner("sourceFile.phal", "instructionCodes.txt");
         try {
             myScanner.readFile();
-            
+            System.out.println(myScanner.getPif());
+            System.out.println(myScanner.getInstructionCodes());
+            System.out.println(myScanner.getVariableSymbolTable());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
