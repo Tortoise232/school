@@ -106,6 +106,23 @@ public class Scanner{
         return null;
     }*/
 
+    // mad to-do at lab lol
+    // public Stringp[] parseSymbolCharacterss(String[] line){
+    //     String[] result = new String[100];
+
+    //     //if a symbol inside the instruction code sym table has only one character, add it to the array
+    //     ArrayList<char> symbolCharacters = new ArrayList<>();
+    //     for(String instructionCode : instructionCodes.keys()){
+    //         if(instructionCode.length == 1)
+    //             symbolCharacters.add(instructionCode.get(0));
+    //     }
+    //     for(String element: line){
+    //         for(int ct = 0; ct < element.length; ct++)
+    //             if(symbolCharacters.contains(element.get(ct)))
+    //                pif.add(new Tuple(instructionCodes.get(element), 0));
+    //     }
+    // }
+
     //I AM PROUD OF THIS
     public String[] parseMissingSpaces(String[] line){
         int length = 0;
