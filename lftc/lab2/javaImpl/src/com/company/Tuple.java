@@ -6,6 +6,15 @@ package com.company;
 public class Tuple {
     public int x;
     public int y;
+
+    @Override
+    public String toString() {
+        return "{" +
+                 x +
+                "," +  y +
+                '}';
+    }
+
     public Tuple(int x, int y){
         this.x = x;
         this.y = y;

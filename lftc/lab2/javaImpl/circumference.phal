@@ -1,0 +1,7 @@
+
+float PI = 3.14;
+float radius , area , circum;
+radius;
+area = PI * radius * radius;
+circum = 2 * PI * radius;
+return 0;

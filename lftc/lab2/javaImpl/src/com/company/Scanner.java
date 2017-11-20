@@ -7,6 +7,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Petean Mihai on 11/8/2017.
@@ -17,6 +18,7 @@ public class Scanner{
     private HashMap<String, Integer> instructionCodes = new HashMap<>();
     private HashMap<String, Integer> constantSymbolTable = new HashMap<>();
     private BufferedReader fileReader;
+    private Map<Character, Integer> symbolCharacters = new HashMap<>();
 
     public ArrayList<Tuple> getPif() {
         return pif;
@@ -106,36 +108,48 @@ public class Scanner{
         return null;
     }*/
 
-    // mad to-do at lab lol
-    // public Stringp[] parseSymbolCharacterss(String[] line){
-    //     String[] result = new String[100];
+    //mad to-do at lab lol
+    public String[] parseSymbolCharacters(String[] line){
+        String[] result = new String[100];
+        int length = 0;
+        //if a symbol inside the instruction code sym table has only one character, add it to the array
+        for(String instructionCode : instructionCodes.keySet()){
+            if(instructionCode == null)
+                continue;
+            if(instructionCode.length() == 1)
+                symbolCharacters.put(instructionCode.charAt(0), instructionCodes.get(instructionCode));
+        }
+        for(String element: line) {
+            for (Character charr : symbolCharacters.keySet())
+                 element = element.replace("" + charr, " " + charr + " ");
+            result[length ++] = element;
+        }
 
-    //     //if a symbol inside the instruction code sym table has only one character, add it to the array
-    //     ArrayList<char> symbolCharacters = new ArrayList<>();
-    //     for(String instructionCode : instructionCodes.keys()){
-    //         if(instructionCode.length == 1)
-    //             symbolCharacters.add(instructionCode.get(0));
-    //     }
-    //     for(String element: line){
-    //         for(int ct = 0; ct < element.length; ct++)
-    //             if(symbolCharacters.contains(element.get(ct)))
-    //                pif.add(new Tuple(instructionCodes.get(element), 0));
-    //     }
-    // }
+        return result;
+    }
+
+    public boolean allSpaces(String string){
+        for(int ct = 0; ct < string.length(); ct ++)
+            if(string.charAt(ct) != ' ')
+                return false;
+        return true;
+    }
 
     //I AM PROUD OF THIS
     public String[] parseMissingSpaces(String[] line){
         int length = 0;
         String[] result = new String[100];
-        for(String section: line)
-            if(section.contains(",") && section.length() > 1) {
+        for(String section: line) {
+            if(section == null || allSpaces(section))
+                continue;
+            if (section.contains(",") && section.length() > 1) {
                 section.replace(",", " , ");
-                for(String subSection: section.split(" "))
-                    result[length ++] = subSection;
-            }
-            else
-                result[length ++]  = section;
-        return result;
+                for (String subSection : section.split(" "))
+                    result[length++] = subSection;
+            } else
+                result[length++] = section;
+        }
+        return line;
     }
 
     public void parseLine(String line){
@@ -149,18 +163,31 @@ public class Scanner{
                 parseAssignStatement(splitLine); break;
 
         }*/
+
         String[] splitLine = line.split(" ");
+        splitLine = parseSymbolCharacters(splitLine);
         splitLine = parseMissingSpaces(splitLine);
         for(String element: splitLine){
             if(element == "" || element == null)
-                break;
+                continue;
             if(instructionCodes.containsKey(element))
                 pif.add(new Tuple(instructionCodes.get(element), 0));
-            else
+
+            else {
                 //this is quite stupid because it means all elements will be parsed as variables but it's easy to change
-                if(!variableSymbolTable.containsKey(element))
+                for (int ct = 0; ct < element.length(); ct++) {
+                    if (symbolCharacters.containsKey(element.charAt(ct))) {
+                        pif.add(new Tuple(symbolCharacters.get(element.charAt(ct)), 0));
+
+                    }
+
+                }
+                if (!variableSymbolTable.containsKey(element)){
                     variableSymbolTable.put(element, variableSymbolTable.size());
-        }
+                    pif.add(variableSymbolTable.get(element),);
+                }
+            }
+            }
     }
 
     public void readFile() throws IOException {
