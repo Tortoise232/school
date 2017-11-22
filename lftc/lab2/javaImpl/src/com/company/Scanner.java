@@ -13,18 +13,19 @@ import java.util.Map;
  * Created by Petean Mihai on 11/8/2017.
  */
 public class Scanner{
-    private ArrayList<Tuple> pif = new ArrayList<>(); //program internal form
+    private ArrayList<String> pif = new ArrayList<>(); //program internal form
     private HashMap<String, Integer> variableSymbolTable = new HashMap<>();
     private HashMap<String, Integer> instructionCodes = new HashMap<>();
     private HashMap<String, Integer> constantSymbolTable = new HashMap<>();
     private BufferedReader fileReader;
     private Map<Character, Integer> symbolCharacters = new HashMap<>();
 
-    public ArrayList<Tuple> getPif() {
+    public ArrayList<String> getPif() {
         return pif;
     }
+    private static int variableTableCounter = 0;
 
-    public void setPif(ArrayList<Tuple> pif) {
+    public void setPif(ArrayList<String> pif) {
         this.pif = pif;
     }
 
@@ -109,9 +110,7 @@ public class Scanner{
     }*/
 
     //mad to-do at lab lol
-    public String[] parseSymbolCharacters(String[] line){
-        String[] result = new String[100];
-        int length = 0;
+    public String parseSymbolCharacters(String line){
         //if a symbol inside the instruction code sym table has only one character, add it to the array
         for(String instructionCode : instructionCodes.keySet()){
             if(instructionCode == null)
@@ -119,13 +118,9 @@ public class Scanner{
             if(instructionCode.length() == 1)
                 symbolCharacters.put(instructionCode.charAt(0), instructionCodes.get(instructionCode));
         }
-        for(String element: line) {
             for (Character charr : symbolCharacters.keySet())
-                 element = element.replace("" + charr, " " + charr + " ");
-            result[length ++] = element;
-        }
-
-        return result;
+                line = line.replace("" + charr, " " + charr + " ");
+        return line;
     }
 
     public boolean allSpaces(String string){
@@ -163,31 +158,35 @@ public class Scanner{
                 parseAssignStatement(splitLine); break;
 
         }*/
-
+        line = parseSymbolCharacters(line);
         String[] splitLine = line.split(" ");
-        splitLine = parseSymbolCharacters(splitLine);
-        splitLine = parseMissingSpaces(splitLine);
-        for(String element: splitLine){
+
+//        splitLine = parseMissingSpaces(splitLine);
+        for(int i = 0; i < splitLine.length; i ++){
+            String element = splitLine[i];
             if(element == "" || element == null)
                 continue;
             if(instructionCodes.containsKey(element))
-                pif.add(new Tuple(instructionCodes.get(element), 0));
+                pif.add("(" + instructionCodes.get(element)  + ",-)");
 
             else {
                 //this is quite stupid because it means all elements will be parsed as variables but it's easy to change
-                for (int ct = 0; ct < element.length(); ct++) {
-                    if (symbolCharacters.containsKey(element.charAt(ct))) {
-                        pif.add(new Tuple(symbolCharacters.get(element.charAt(ct)), 0));
-
-                    }
-
-                }
                 if (!variableSymbolTable.containsKey(element)){
+                    try {
+                        if (Integer.parseInt(element) > 0)
+                            break;
+                    }
+                    catch(Exception e){}
+                    if(element.length() > 8) {
+                        System.out.println("ERROR IDENTIFIER NAME TOO LONG: " + element + " AT LINE " + i);
+                        break;
+                    }
                     variableSymbolTable.put(element, variableSymbolTable.size());
-                    pif.add(variableSymbolTable.get(element),);
+
                 }
+                pif.add("(" + element + "," +  variableSymbolTable.size() +")");
             }
-            }
+        }
     }
 
     public void readFile() throws IOException {

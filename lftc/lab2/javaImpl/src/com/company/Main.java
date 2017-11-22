@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
         //parseFile("sourceFile.phal");
-        parseFile("circumference.phal");
+        parseFile("sourceFile.phal");
     }
 
     public static void parseFile(String fileName){
