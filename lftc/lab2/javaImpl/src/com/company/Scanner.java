@@ -147,6 +147,16 @@ public class Scanner{
         return line;
     }
 
+    public boolean checkVar(String var){
+        if(var.length() == 0)
+            return true;
+
+        if (var.charAt(0) > '0' && var.charAt(0) < '9')
+            return false;
+
+        return true;
+    }
+
     public void parseLine(String line){
        //not for lab 2 boyooo
         /* String[] splitLine =  line.split(" ");
@@ -161,30 +171,35 @@ public class Scanner{
         line = parseSymbolCharacters(line);
         String[] splitLine = line.split(" ");
 
-//        splitLine = parseMissingSpaces(splitLine);
+
         for(int i = 0; i < splitLine.length; i ++){
             String element = splitLine[i];
-            if(element == "" || element == null)
+            if(element == "" || element.length() == 0)
                 continue;
             if(instructionCodes.containsKey(element))
                 pif.add("(" + instructionCodes.get(element)  + ",-)");
 
             else {
                 //this is quite stupid because it means all elements will be parsed as variables but it's easy to change
-                if (!variableSymbolTable.containsKey(element)){
+                if (!variableSymbolTable.containsKey(element)) {
                     try {
                         if (Integer.parseInt(element) > 0)
                             break;
+                    } catch (Exception e) {
                     }
-                    catch(Exception e){}
-                    if(element.length() > 8) {
+                    if (element.length() > 8) {
                         System.out.println("ERROR IDENTIFIER NAME TOO LONG: " + element + " AT LINE " + i);
                         break;
                     }
-                    variableSymbolTable.put(element, variableSymbolTable.size());
-
+                    if (checkVar(element)){
+                        variableSymbolTable.put(element, variableSymbolTable.size());
+                        pif.add("(" + element + "," + variableSymbolTable.size() + ")");
+                    }
+                    else
+                        System.out.println("ERROR INVALID IDENTIFIER: " + element + " AT LINE " + i);
                 }
-                pif.add("(" + element + "," +  variableSymbolTable.size() +")");
+                else
+                    pif.add("(" + element + "," + variableSymbolTable.size() + ")");
             }
         }
     }
