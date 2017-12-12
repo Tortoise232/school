@@ -1,5 +1,5 @@
-float PI ;
+float pi ;
 float radius , area , circum ;
-area = PI * radius * radius ;
-circum = 2 * PI * radius ;
+area = pi * radius * radius ;
+circum = 2 * pi * radius ;
 return circum ;

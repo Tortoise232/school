@@ -20,6 +20,8 @@ public class MyScanner {
     private BufferedReader fileReader;
     private Map<Character, Integer> symbolCharacters = new HashMap<>();
 
+    private FiniteAutomaton instructionAutomaton = new FiniteAutomaton("instructionCode.auto");
+    private FiniteAutomaton identifierAutomaton = new FiniteAutomaton("identifier.auto");
     private FiniteAutomaton integerAutomaton = new FiniteAutomaton("integer.auto");
     public MyScanner(File file) throws FileNotFoundException {
     }
@@ -126,16 +128,6 @@ public class MyScanner {
         return line;
     }
 
-    public boolean checkVar(String var){
-        if(var.length() == 0)
-            return true;
-
-        if (var.charAt(0) > '0' && var.charAt(0) < '9')
-            return false;
-
-        return true;
-    }
-
     public void parseLine(String line){
         line = parseSymbolCharacters(line);
         String[] splitLine = line.split(" ");
@@ -145,31 +137,17 @@ public class MyScanner {
             String element = splitLine[i];
             if(element == "" || element.length() == 0)
                 continue;
-            if(instructionCodes.containsKey(element))
-                pif.add("(" + instructionCodes.get(element)  + ",-)");
-
-            else {
-                //this is quite stupid because it means all elements will be parsed as variables but it's easy to change
-                if (!variableSymbolTable.containsKey(element)) {
-                    try {
-                        if (integerAutomaton.checkSequence(element))
-                            break;
-                    } catch (Exception e) {
-                    }
-                    if (element.length() > 8) {
-                        System.out.println("ERROR IDENTIFIER NAME TOO LONG: " + element + " AT LINE " + i);
-                        break;
-                    }
-                    if (checkVar(element)){
-                        variableSymbolTable.put(element, variableSymbolTable.size());
-                        pif.add("(" + element + "," + variableSymbolTable.size() + ")");
-                    }
-                    else
-                        System.out.println("ERROR INVALID IDENTIFIER: " + element + " AT LINE " + i);
-                }
+            if(integerAutomaton.checkSequence(element))
+                pif.add("(" + element  + ", int)");
+            else
+                if(instructionCodes.containsKey(element))
+                    pif.add("(" + instructionCodes.get(element)  + ", -)");
                 else
-                    pif.add("(" + element + "," + variableSymbolTable.size() + ")");
-            }
+                    if(identifierAutomaton.checkSequence(element)) {
+                        variableSymbolTable.put(element, variableSymbolTable.size());
+                        pif.add("(" + element + ", " + variableSymbolTable.size() + ")");
+                    }
+
         }
     }
 

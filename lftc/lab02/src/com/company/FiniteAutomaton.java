@@ -10,6 +10,17 @@ import java.util.*;
 public class FiniteAutomaton {
     private ArrayList<String> alphabet = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "FiniteAutomaton{" +
+                "alphabet=" + alphabet +
+                ", states=" + states +
+                ", transitions=" + transitions +
+                ", initialState='" + initialState + '\'' +
+                ", finalStates=" + finalStates +
+                '}';
+    }
+
     private ArrayList<String> states = new ArrayList<>();
     private List<Transition> transitions = new ArrayList<>();
 
@@ -40,19 +51,22 @@ public class FiniteAutomaton {
 
 
         for (int i = 0; i < states.size(); i++) {
-            if (statuses.get(i) == 0) {
+            if (statuses.get(i) == 1) {
                 initialState = states.get(i);
-            } else if (statuses.get(i) == 1) {
+            } else if (statuses.get(i) == 2) {
                 finalStates.add(states.get(i));
             }
         }
 
-        String[] rawTransition = null;
-        do {
-            rawTransition = s.nextLine().split(" ");
+        String[] rawTransition = {"thiswillcrash"};
+        while(rawTransition != null) {
+            if(s.hasNext())
+                rawTransition = s.nextLine().split(" ");
+            else
+                break;
             transitions.add(new Transition(rawTransition[0], rawTransition[1], rawTransition[2]));
             alphabet.add(rawTransition[2]);
-        }while(rawTransition != null);
+        }
     }
 
     public boolean checkSequence(String sequence) {
@@ -63,7 +77,7 @@ public class FiniteAutomaton {
             String character = sequence.substring(i, i+1), next = "";
 
             for (Transition transition : transitions) {
-                if ((transition.getInitialState() ==  currentState) && (transition.getValue() == character)) {
+                if (Objects.equals(transition.getInitialState(),currentState) && Objects.equals(transition.getValue(),character)) {
                     next = transition.getFinalState();
                     break;
                 }
