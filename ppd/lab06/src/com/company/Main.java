@@ -1,10 +1,15 @@
 package com.company;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static double[] result;
-
+    public static ExecutorService karatsubaExecutor;
     public static void main(String[] args) {
         double[] a = {1,2,3,4};
         double[] b = {1};
@@ -24,6 +29,8 @@ public class Main {
         return result;
     }
 
+
+
     public static double[] multiplyPolynomialsSequentialSimple(double[] a, double[] b) {
         if(a.length > b.length)
             b = fillPolynomial(a.length, b);
@@ -39,6 +46,21 @@ public class Main {
         return result;
     }
 
+    public static double[] multiplyPolynomialsSequentialThreading(double[] a, double[] b) throws InterruptedException {
+        if(a.length > b.length)
+            b = fillPolynomial(a.length, b);
+        if(b.length > a.length)
+            a = fillPolynomial(b.length, a);
+        double[] result = new double[a.length + b.length];
+        ExecutorService executor =  Executors.newFixedThreadPool(10);
+        for (int ct_a = 0; ct_a < a.length; ct_a++) {
+            Runnable task =  new SimpleMultiplicationWorker(ct_a, a, b);
+            executor.execute(task);
+        }
+        executor.shutdown();
+        executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        return result;
+    }
     public static double[] multiplyPolynomialsSequentialKaratsuba(double[] a, double[] b){
         //normalise polynomials
         if(a.length > b.length)
@@ -47,6 +69,19 @@ public class Main {
             a = fillPolynomial(b.length, a);
 
         double[] result = karatsuba(a, b);
+        return result;
+    }
+
+    public static double[] multiplyPolynomialsThreadingKaratsuba(double[] a, double[] b) throws InterruptedException {
+        if(a.length > b.length)
+            b = fillPolynomial(a.length, b);
+        if(b.length > a.length)
+            a = fillPolynomial(b.length, a);
+
+        karatsubaExecutor = Executors.newFixedThreadPool(10);
+        Runnable karatRun = new KaratsubaWorker(a, b, 0);
+        karatsubaExecutor.execute(karatRun);
+        karatsubaExecutor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
         return result;
     }
 
@@ -73,10 +108,16 @@ public class Main {
             bSecondHalf[ct] = b[ct + half];
         }
 
-        double[] resultFirstHalf = karatsuba(aFirstHalf, bFirstHalf);
-        double[] resultSecondHalf = karatsuba(aSecondHalf, bSecondHalf);
-        double[] resultFirstHalfRev =  karatsuba(aFirstHalf, bSecondHalf);
-        double[] resultSecondHalfRev = karatsuba(aSecondHalf, bFirstHalf);
+        double[] resultFirstHalf;
+        double[] resultSecondHalf;
+        double[] resultFirstHalfRev;
+        double[] resultSecondHalfRev;
+
+        resultFirstHalf = karatsuba(aFirstHalf, bFirstHalf);
+        resultSecondHalf = karatsuba(aSecondHalf, bSecondHalf);
+        resultFirstHalfRev =  karatsuba(aFirstHalf, bSecondHalf);
+        resultSecondHalfRev = karatsuba(aSecondHalf, bFirstHalf);
+
 
         for(int i = 0; i < half; i++){
             result[i] = resultFirstHalf[i] + resultFirstHalfRev[i];
