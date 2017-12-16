@@ -19,7 +19,7 @@ public class MyScanner {
     private HashMap<String, Integer> constantSymbolTable = new HashMap<>();
     private BufferedReader fileReader;
     private Map<Character, Integer> symbolCharacters = new HashMap<>();
-    
+
     private FiniteAutomaton identifierAutomaton = new FiniteAutomaton("identifier.auto");
     private FiniteAutomaton integerAutomaton = new FiniteAutomaton("integer.auto");
     public MyScanner(File file) throws FileNotFoundException {
