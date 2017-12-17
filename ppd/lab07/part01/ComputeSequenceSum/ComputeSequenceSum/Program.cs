@@ -80,6 +80,14 @@ namespace ComputeSequenceSum
             Console.WriteLine("\n---------------------------------------------");
             for (int i = 0; i < ARRAY_LENGTH; i++)
                 Console.Write(resultList[i] + " ");
+            BigInteger resultSimple = new BigInteger(0);
+            for (int i = 0; i < ARRAY_LENGTH; i++)
+                resultSimple += (BigInteger)resultList[i];
+            BigInteger resultThreading = threadAddNumbers(resultList);
+            Console.WriteLine("ADDING A BUNCH OF NUMBERS SIMPLE: " + resultSimple);
+            Console.WriteLine("ADDING A BUNCH OF NUMBERS THREAD: " + resultThreading);
+            
+            
         }
 
         public static void sequentialSolution()
@@ -107,6 +115,43 @@ namespace ComputeSequenceSum
                 startingList.Add(RandomBigInt());
         }
 
+        
+        static BigInteger threadAddNumbers(ArrayList a)
+        {
+            Console.WriteLine(a.Count);
+            if (a.Count > 1)
+            {
+                //bad array splitting (it works tho)
+                ArrayList aBottomHalf = new ArrayList(a.Count / 2);
+                ArrayList aTopHalf = new ArrayList(a.Count / 2);
+                for (int i = 0; i < a.Count / 2; i++)
+                {
+                    aBottomHalf.Add(a[i]);
+                    aTopHalf.Add(a[i + a.Count / 2]);
+                }
+                if (a.Count % 2 != 0)
+                    aTopHalf.Add(a[a.Count - 1]);
 
+
+                BigInteger resultBot = new BigInteger(0);
+                BigInteger resultTop = new BigInteger(0);
+
+                //start a thread for each halfs of the array (create a binary tree of thread / thread calls)
+                Thread bottomThread = new Thread(() => resultBot = threadAddNumbers(aBottomHalf));
+                Thread topThread = new Thread(() => resultTop = threadAddNumbers(aTopHalf));
+
+                bottomThread.Start();
+                topThread.Start();
+
+                bottomThread.Join();
+                topThread.Join();
+                //uber fucking magic
+                return resultBot + resultTop;
+                   
+            }
+            //fucking magic
+            return (BigInteger)a[0];
+
+        }
     }
 }
