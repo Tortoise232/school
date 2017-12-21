@@ -19,8 +19,8 @@ namespace HamiltoneanCycleParser
     class Program
     {
 
-        public static int NUMBER_NODES = 8;
-        public static int NUMBER_OF_SUCC = 5;
+        public static int NUMBER_NODES = 6;
+        public static int NUMBER_OF_SUCC = 3;
         public static ArrayList graph = new ArrayList();
         public static Random rand = new Random();
         public static ArrayList executor = new ArrayList();

@@ -16,8 +16,8 @@ namespace ComputeSequenceSum
     {
         
         public static Random random = new Random();
-        public const int NUMBER_LENGTH = 10;
-        public const int ARRAY_LENGTH = 20;
+        public const int NUMBER_LENGTH = 1;
+        public const int ARRAY_LENGTH = 5;
         public static ArrayList startingList = new ArrayList();
         public static ArrayList resultList = new ArrayList();
 
@@ -118,7 +118,7 @@ namespace ComputeSequenceSum
         
         static BigInteger threadAddNumbers(ArrayList a)
         {
-            Console.WriteLine(a.Count);
+           // Console.WriteLine(a.Count);
             if (a.Count > 1)
             {
                 //bad array splitting (it works tho)

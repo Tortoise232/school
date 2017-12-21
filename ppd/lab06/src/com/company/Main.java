@@ -10,12 +10,17 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     public static double[] result;
     public static ExecutorService karatsubaExecutor;
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         double[] a = {1,2,3,4};
-        double[] b = {1};
+        double[] b = {4,5,1};
         double[] simpleRes = multiplyPolynomialsSequentialSimple(a, b);
+        System.out.println(simpleRes);
         double[] karatsubaRes = multiplyPolynomialsSequentialKaratsuba(a, b);
-
+        System.out.println(simpleRes);
+        double[] simpleThreadingRes = multiplyPolynomialsSequentialThreading(a, b);
+        System.out.println(result);
+        double[] threadingKaratsuba = multiplyPolynomialsThreadingKaratsuba(a, b);
+        System.out.println(result);
         // write your code here
     }
 

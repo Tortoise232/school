@@ -26,10 +26,14 @@ public class SimpleMultiplicationWorker implements Runnable {
         }
 
         //add back to result
-        synchronized (Main.result){
-            for(int i = 0; i < result.length; i ++){
-                Main.result[i] += result[i];
+        try {
+            synchronized (Main.result) {
+                for (int i = 0; i < result.length; i++) {
+                    Main.result[i] += result[i];
+                }
             }
+        } catch(Exception e){
+            e.printStackTrace();
         }
     }
 }

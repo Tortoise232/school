@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputeSequenceSum", "ComputeSequenceSum\ComputeSequenceSum.csproj", "{A5906FDA-9CF0-4014-83E3-6B9BE1EC8B52}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HamiltoneanCycleParser", "..\..\..\lab08\HamiltoneanCycleParser\HamiltoneanCycleParser\HamiltoneanCycleParser.csproj", "{A50A8336-5111-49FD-BA95-4D7CBFCD6C51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A5906FDA-9CF0-4014-83E3-6B9BE1EC8B52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5906FDA-9CF0-4014-83E3-6B9BE1EC8B52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5906FDA-9CF0-4014-83E3-6B9BE1EC8B52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A50A8336-5111-49FD-BA95-4D7CBFCD6C51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A50A8336-5111-49FD-BA95-4D7CBFCD6C51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A50A8336-5111-49FD-BA95-4D7CBFCD6C51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A50A8336-5111-49FD-BA95-4D7CBFCD6C51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

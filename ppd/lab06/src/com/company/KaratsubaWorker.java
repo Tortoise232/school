@@ -1,5 +1,7 @@
 package com.company;
 
+import static com.company.Main.karatsuba;
+
 /**
  * Created by Petean Mihai on 12/11/2017.
  */
@@ -48,5 +50,4 @@ public class KaratsubaWorker implements Runnable{
             Main.result[i + position] = resultFirstHalf[i] + resultFirstHalfRev[i];
             Main.result[i + half + position] = resultSecondHalf[i] + resultSecondHalfRev[i];
         }
-        return result;
     }}
