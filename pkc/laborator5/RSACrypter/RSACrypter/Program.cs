@@ -70,6 +70,8 @@ namespace RSACrypter
             return b == 0 ? a : gcd(b, a % b);
         }
 
+
+        
     }
     public class RSACrypter
     {
