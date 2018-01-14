@@ -11,11 +11,14 @@ namespace pollardp_1
 {
     class Program
     {
+        static BigInteger b;
         static void Main(string[] args)
         {
             while (true) {
                 Console.WriteLine("Give (another) number!");
                 BigInteger nr = BigInteger.Parse(Console.ReadLine());
+                Console.WriteLine("Give bound!");
+                b = BigInteger.Parse(Console.ReadLine());
                 Console.WriteLine(nr);
                 Stopwatch time = new Stopwatch();
                 time.Start();
@@ -54,7 +57,7 @@ namespace pollardp_1
         public static BigInteger randomBigInt()
         {
             Random random = new Random();
-            byte[] bytes = new byte[1];
+            byte[] bytes = new byte[3];
             BigInteger R;
             random.NextBytes(bytes);
             R = new BigInteger(bytes);
@@ -70,6 +73,8 @@ namespace pollardp_1
 
         public static bool isPrime(BigInteger a)
         {
+            //if (a == 1)
+              //  return false;
             for (BigInteger i = 2; i < a; i++)
                 if (a % i == 0)
                     return false;
@@ -101,7 +106,6 @@ namespace pollardp_1
         public static ArrayList factoriseP1(BigInteger number)
         {
             ArrayList result = new ArrayList();
-            BigInteger b = new BigInteger(10);
             //b!
             BigInteger k = factorial(b);
             while (true)
@@ -113,17 +117,25 @@ namespace pollardp_1
                     a = randomBigInt();
                     if (a < 0)
                         a = -a;
-                    Console.WriteLine("ANOTHER RAND PLS " + a);
+                    //Console.WriteLine("ANOTHER RAND PLS " + a);
                 } while (a >= number);
-                Console.WriteLine("OK TRY  " + a);
+                //Console.WriteLine("OK TRY  " + a);
                 BigInteger tmp = modularExpo(a, k, number);
                 tmp--;
                 //gcd(a^k - 1 (mod n), number);
                 BigInteger gcdRes = gcd(tmp, number);
-                if(gcdRes != 1 && gcdRes > 0)
+                if(gcdRes > 1)
                     if (isPrime(gcdRes))
                     {
                         result.Add(gcdRes);
+                        number /= gcdRes;
+                    }
+                    else
+                    {
+                        //Console.WriteLine("IT HAS TO BE DONE  " + gcdRes);
+                        ArrayList partialRes = factoriseS(gcdRes);
+                        for (int i = 0; i < partialRes.Count; i++)
+                             result.Add(partialRes[i]);
                         number /= gcdRes;
                     }
                 if (isPrime(number))

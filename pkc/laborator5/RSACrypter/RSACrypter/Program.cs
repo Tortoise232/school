@@ -76,6 +76,7 @@ namespace RSACrypter
     public class RSACrypter
     {
         public BigInteger n, p, q, phin, d, e;
+        public ArrayList cipherTextAsNumbers = new ArrayList();
         public RSACrypter(BigInteger p, BigInteger q)
         {
             this.p = p;
@@ -149,8 +150,12 @@ namespace RSACrypter
         public string encryptText(string text)
         {
             string result = "";
-            for(int i = 0; i < text.Length; i ++)
-                result += (char)(Program.modularExpo(new BigInteger(text[i]), this.e, this.n));
+            for (int i = 0; i < text.Length; i++)
+            {
+                BigInteger cipheredChar = Program.modularExpo(new BigInteger(text[i]), this.e, this.n);
+                result += (char)(cipheredChar);
+                cipherTextAsNumbers.Add(cipheredChar);
+            }
             return result;
         }
 

@@ -53,11 +53,13 @@ namespace RSACrypter
         private void encryptButton_Click(object sender, EventArgs e)
         {
             cipherText.Text = myCrypter.encryptText(plainText.Text);
+            plainText.ResetText();
         }
 
         private void decryptButton_Click(object sender, EventArgs e)
         {
             plainText.Text = myCrypter.decryptText(cipherText.Text);
+            cipherText.ResetText();
         }
     }
 }
