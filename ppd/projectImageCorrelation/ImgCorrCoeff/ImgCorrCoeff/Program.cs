@@ -44,12 +44,25 @@ namespace ImgCorrCoeff
         static double denominatorSumABlue = 0;
         static double denominatorSumBBlue = 0;
 
+
+        static int threadsDoneCt = 0;
         static void Main(string[] args)
         {
             //Console.Write("First image file path: ");
             string path1 = "E:\\Program Files (x86)\\GitHub\\school\\ppd\\projectImageCorrelation\\ImgCorrCoeff\\ImgCorrCoeff\\uganda.jpg";
            // Console.Write("Second image file path: ");
             string path2 = "E:\\Program Files (x86)\\GitHub\\school\\ppd\\projectImageCorrelation\\ImgCorrCoeff\\ImgCorrCoeff\\uganda2.jpg";
+
+            initRun(path1, path2);
+            double corCoff = correlationCoefficientSeq();
+            clearData();
+            initRun(path1, path2);
+            corCoff = correlationCoefficientThreaded();
+            Console.Read();
+
+        }
+        static void initRun(string path1, string path2)
+        {
             loadImages(path1, path2);
             if (!checkImageSizes())
                 return;
@@ -59,17 +72,7 @@ namespace ImgCorrCoeff
 
             height = image1.Height;
             width = image1.Width;
-
-            double corCoff = correlationCoefficientThreaded();
-           
-            Console.Write("Result is: " + corCoff);
-            Console.Read();
-
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         static double correlationCoefficientSeq()
         {
             
@@ -94,21 +97,28 @@ namespace ImgCorrCoeff
             double resultG = numeratorSumGreen / Math.Sqrt(denominatorSumAGreen * denominatorSumBGreen);
             double resultB = numeratorSumBlue / Math.Sqrt(denominatorSumABlue * denominatorSumBBlue);
             //Console.WriteLine("\n"+ resultR + " R      " + resultG + " G       " + resultB + " B      ");
+            Console.Write("Sequential result is: " + (resultR + resultG + resultB) / 3 + "\n");
             return (resultR + resultG + resultB) / 3;
         }
 
-        static void correlationCoeff(int part)
+        public static void correlationCoeff(Object state)
         {
+            int part = (int)state;
             int startingRow = (height / NR_OF_CORES) * part;
-            int lastRow = startingRow + (height / NR_OF_CORES);
+            int lastRow;
+            if (part == NR_OF_CORES - 1)
+                lastRow = height;
+            else
+              lastRow = startingRow + (height / NR_OF_CORES);
             Console.WriteLine("THREAD " + part + " STARTED FOR: " + startingRow + " THROUGH TO " + lastRow);
-            for (int i = startingRow; i < lastRow; i++)
-                for (int j = 0; j < height; j++)
+            for (int i = 0; i < width; i++)
+                for (int j = startingRow; j < lastRow; j++)
                 {
                     Color image1Pix;
                     Color image2Pix;
                     lock (image1)
                     {
+                        //Console.WriteLine(i + " " + j);
                         image1Pix = image1.GetPixel(i, j);
                     }
                     lock (image2)
@@ -128,28 +138,28 @@ namespace ImgCorrCoeff
                     denominatorSumBBlue += (image2Pix.B - mean2.B) * (image2Pix.B - mean2.B);
                 }
             Console.WriteLine("THREAD " + part + " FINISHED.");
+            threadsDoneCt++;
         }
 
         static double correlationCoefficientThreaded()
         {
-            ArrayList threadList = new ArrayList();
-            int nrc = NR_OF_CORES;
-            while(nrc > 0) 
-            { 
-                Thread thread = new Thread(() =>  correlationCoeff(--nrc));
-                thread.Start();
-                threadList.Add(thread);
+            
+            for(int i = 0; i < NR_OF_CORES; i ++ )
+            {
+                ThreadPool.QueueUserWorkItem(correlationCoeff, i);
             }
 
-            foreach (Thread myThread in threadList)
+            while (threadsDoneCt < NR_OF_CORES)
             {
-                myThread.Join();
+                Thread.Sleep(100);
             }
             double resultR = numeratorSumRed / Math.Sqrt(denominatorSumARed * denominatorSumBRed);
             double resultG = numeratorSumGreen / Math.Sqrt(denominatorSumAGreen * denominatorSumBGreen);
             double resultB = numeratorSumBlue / Math.Sqrt(denominatorSumABlue * denominatorSumBBlue);
             //Console.WriteLine("\n"+ resultR + " R      " + resultG + " G       " + resultB + " B      ");
+            Console.Write("Threading result is: " + (resultR + resultG + resultB) / 3 + "\n");
             return (resultR + resultG + resultB) / 3;
+
         }
 
         static MeanRGB calcMean(Bitmap bitmap)
@@ -163,12 +173,12 @@ namespace ImgCorrCoeff
                     sumG += pix.G;
                     sumB += pix.B;
                 }
-            Console.WriteLine("Size:" + bitmap.Height * bitmap.Width);
+            //Console.WriteLine("Size:" + bitmap.Height * bitmap.Width);
             float meanR = sumR / (bitmap.Width * bitmap.Height);
             float meanG = sumG / (bitmap.Width * bitmap.Height);
             float meanB = sumB / (bitmap.Width * bitmap.Height);
-            Console.WriteLine("Sums: " + sumR + " " + sumG + " " + sumB);
-            Console.WriteLine("Means: " + meanR + " " + meanG + " " + meanB);
+            //Console.WriteLine("Sums: " + sumR + " " + sumG + " " + sumB);
+            //Console.WriteLine("Means: " + meanR + " " + meanG + " " + meanB);
             MeanRGB result = new MeanRGB(meanR, meanG, meanB);
             return result;
             
@@ -198,6 +208,28 @@ namespace ImgCorrCoeff
             mean1 = calcMean(image1);
             mean2 = calcMean(image2);
         }
+
+        static void clearData()
+        {
+          
+            height = 0;
+            width = 0;
+
+            //used for the correlation formula
+            numeratorSumRed = 0;
+            denominatorSumARed = 0;
+            denominatorSumBRed = 0;
+
+            numeratorSumGreen = 0;
+            denominatorSumAGreen = 0;
+            denominatorSumBGreen = 0;
+
+            numeratorSumBlue = 0;
+            denominatorSumABlue = 0;
+            denominatorSumBBlue = 0;
+            threadsDoneCt = 0;
+        }
+
 
         static bool checkImageSizes()
         {
