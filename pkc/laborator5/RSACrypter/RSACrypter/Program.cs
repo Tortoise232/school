@@ -90,6 +90,7 @@ namespace RSACrypter
 
         public RSACrypter()
         {
+            //todo p & q must have the same nr of digits
             Random rand = new Random();
             this.p = 0;
             while (this.p == 0 || Program.isPrime(this.p))
@@ -147,14 +148,24 @@ namespace RSACrypter
             Console.WriteLine("DONE SETTING D");
         }
 
+        /*public bool validateText(string text)
+        {
+            for (int i = 0; i < text.Length; i ++)
+                if(text[i].)
+            return true;
+        }*/
+
+       
         public string encryptText(string text)
         {
+            cipherTextAsNumbers.Clear();
             string result = "";
             for (int i = 0; i < text.Length; i++)
             {
-                BigInteger cipheredChar = Program.modularExpo(new BigInteger(text[i]), this.e, this.n);
+                BigInteger cipheredChar = BigInteger.ModPow(new BigInteger(text[i]), this.e, this.n);
                 result += (char)(cipheredChar);
                 cipherTextAsNumbers.Add(cipheredChar);
+                
             }
             return result;
         }

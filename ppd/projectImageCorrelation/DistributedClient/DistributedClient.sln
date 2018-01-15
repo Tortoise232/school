@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistributedClient", "DistributedClient\DistributedClient.csproj", "{A8925BD6-4795-4C9E-A965-89408136E4AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImgCorrCoeff", "..\ImgCorrCoeff\ImgCorrCoeff\ImgCorrCoeff.csproj", "{95666473-6E4A-4275-B5F8-D822E263D921}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8925BD6-4795-4C9E-A965-89408136E4AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8925BD6-4795-4C9E-A965-89408136E4AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8925BD6-4795-4C9E-A965-89408136E4AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8925BD6-4795-4C9E-A965-89408136E4AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95666473-6E4A-4275-B5F8-D822E263D921}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95666473-6E4A-4275-B5F8-D822E263D921}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95666473-6E4A-4275-B5F8-D822E263D921}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95666473-6E4A-4275-B5F8-D822E263D921}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

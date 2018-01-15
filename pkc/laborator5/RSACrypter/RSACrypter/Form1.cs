@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,12 +13,13 @@ namespace RSACrypter
 {
     public partial class Form1 : Form
     {
+
         RSACrypter myCrypter;
         public Form1()
         {
             InitializeComponent();
             Console.WriteLine("BUTTON PRESSED");
-            myCrypter = new RSACrypter(19, 11);
+            myCrypter = new RSACrypter(109, 199);
            // myCrypter.d = 2753;
             //myCrypter.e = 17;
             qtextbox.AppendText(myCrypter.q.ToString());
@@ -52,7 +54,16 @@ namespace RSACrypter
 
         private void encryptButton_Click(object sender, EventArgs e)
         {
+            
             cipherText.Text = myCrypter.encryptText(plainText.Text);
+            cipherTextNumerical.ResetText();
+            if(plainText.Text.Length !=0 )
+                foreach (BigInteger x in myCrypter.cipherTextAsNumbers)
+                {
+                    cipherTextNumerical.Text += x;
+                    cipherTextNumerical.Text += " ";
+                }
+
             plainText.ResetText();
         }
 
@@ -60,6 +71,12 @@ namespace RSACrypter
         {
             plainText.Text = myCrypter.decryptText(cipherText.Text);
             cipherText.ResetText();
+            cipherTextNumerical.ResetText();
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
