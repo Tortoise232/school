@@ -61,7 +61,7 @@ namespace ImgCorrCoeff
             //Console.Write("First image file path: ");
             string path1 = "E:\\Program Files (x86)\\GitHub\\school\\ppd\\projectImageCorrelation\\ImgCorrCoeff\\ImgCorrCoeff\\microsoft600x600.jpg";
             // Console.Write("Second image file path: ");
-            string path2 = "E:\\Program Files (x86)\\GitHub\\school\\ppd\\projectImageCorrelation\\ImgCorrCoeff\\ImgCorrCoeff\\vetnisupp600x600.jpg";
+            string path2 = "E:\\Program Files (x86)\\GitHub\\school\\ppd\\projectImageCorrelation\\ImgCorrCoeff\\ImgCorrCoeff\\microsoft600x600 .jpg";
 
             //initRun(path1, path2);
             Stopwatch time = new Stopwatch();
@@ -76,12 +76,8 @@ namespace ImgCorrCoeff
                 Console.WriteLine("\nThreads used: " + NR_OF_CORES);
                 clearData();
                 initRun(path1, path2);
-                time = new Stopwatch();
-                time.Start();
+                
                 double corCoff = correlationCoefficientThreaded();
-                time.Stop();
-                Console.WriteLine("\nTime: " + time.ElapsedMilliseconds);
-               
             }
             clearData();
             AsynchronousSocketListener.StartListening();
@@ -189,7 +185,8 @@ namespace ImgCorrCoeff
 
         static double correlationCoefficientThreaded()
         {
-          
+            Stopwatch time = new Stopwatch();
+            time.Start();
             for (int i = 0; i < NR_OF_CORES; i ++ )
             {
                 Thread myThread = new Thread(correlationCoeff);
@@ -209,6 +206,8 @@ namespace ImgCorrCoeff
             double resultB = numeratorSumBlue / Math.Sqrt(denominatorSumABlue * denominatorSumBBlue);
             //Console.WriteLine("\n"+ resultR + " R      " + resultG + " G       " + resultB + " B      ");
             Console.Write("Threading result is: " + (resultR + resultG + resultB) / 3);
+            time.Stop();
+            Console.WriteLine("\nTime: " + time.ElapsedMilliseconds);
             return (resultR + resultG + resultB) / 3;
 
         }
@@ -263,6 +262,7 @@ namespace ImgCorrCoeff
         static void clearData()
         {
           
+         
             //used for the correlation formula
             numeratorSumRed = 0;
             denominatorSumARed = 0;
