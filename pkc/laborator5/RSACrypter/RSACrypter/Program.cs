@@ -4,6 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Numerics;
+using PostSharpAspects;
+
+[assembly: LogMethod(AttributePriority = 0)]
+[assembly: LogMethod(AttributePriority = 1, AttributeExclude = true, AttributeTargetTypes = "PostSharpAspects.*")]
 namespace RSACrypter
 {
     static class Program
@@ -18,7 +22,7 @@ namespace RSACrypter
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-            
+
         }
         public static bool isPrime(BigInteger nr)
         {
@@ -30,13 +34,13 @@ namespace RSACrypter
 
         public static BigInteger modularExpo(BigInteger nr, BigInteger pow, BigInteger mod)
         {
-            BigInteger res = 1; 
+            BigInteger res = 1;
 
-            nr = nr % mod;  
+            nr = nr % mod;
 
             while (pow > 0)
             {
-               
+
                 if (pow % 2 == 1)
                     res = (res * nr) % mod;
 
@@ -61,7 +65,7 @@ namespace RSACrypter
             random.NextBytes(bytes);
             bytes[bytes.Length - 1] &= (byte)0x7F; //force sign bit to positive
             R = new BigInteger(bytes);
-            
+
             return R;
         }
 
@@ -71,7 +75,7 @@ namespace RSACrypter
         }
 
 
-        
+
     }
     public class RSACrypter
     {
@@ -118,7 +122,7 @@ namespace RSACrypter
         }
         public void setE(BigInteger e)
         {
-            Console.WriteLine("SETTING E");
+            //Console.WriteLine("SETTING E");
             if (e < phin && Program.gcd(e, phin) == 1 && e != 0)
                 this.e = e;
             //if the provided d value is bad
@@ -131,13 +135,13 @@ namespace RSACrypter
                 } while (e < phin && Program.gcd(e, phin) != 1);
             }
             this.e = e;
-            Console.WriteLine("DONE SETTING E");
+            //Console.WriteLine("DONE SETTING E");
         }
         public void setD(BigInteger d)
         {
-            Console.WriteLine("SETTING D");
+            //Console.WriteLine("SETTING D");
             if ((this.e * d) % phin == 1 && d != this.e)
-            {     
+            {
                 this.d = d;
                 return;
             }
@@ -145,7 +149,7 @@ namespace RSACrypter
             this.d = new BigInteger(1);
             while ((this.e * this.d) % phin != 1 || this.d == this.e)
                 this.d++;
-            Console.WriteLine("DONE SETTING D");
+            //Console.WriteLine("DONE SETTING D");
         }
 
         /*public bool validateText(string text)
@@ -155,7 +159,7 @@ namespace RSACrypter
             return true;
         }*/
 
-       
+
         public string encryptText(string text)
         {
             cipherTextAsNumbers.Clear();
@@ -165,7 +169,7 @@ namespace RSACrypter
                 BigInteger cipheredChar = BigInteger.ModPow(new BigInteger(text[i]), this.e, this.n);
                 result += (char)(cipheredChar);
                 cipherTextAsNumbers.Add(cipheredChar);
-                
+
             }
             return result;
         }
@@ -188,5 +192,5 @@ namespace RSACrypter
             return text;
         }
     }
-    
+
 }
