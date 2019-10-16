@@ -1,4 +1,0 @@
-Star_wars_1;Sci-fi;https://www.youtube.com/watch?v=KfQBdRcgizc;40;1970;
-Donnie_Darko;Sci-fi;https://www.youtube.com/watch?v=ZZyBaFYFySk;20;2001;
-Star_Trek_Beyond;Sci-fi;https://www.youtube.com/watch?v=XRVD32rnzOw;100;2016;
-The_purge;Horror;https://www.youtube.com/watch?v=K0LLaybEuzA;13;2013;

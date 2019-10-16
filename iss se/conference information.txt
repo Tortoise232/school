@@ -1,5 +1,0 @@
-conference:
-	comitee
-	others
-	papers
-	

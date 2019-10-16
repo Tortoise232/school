@@ -1,4 +1,0 @@
-database generat de hibernate vs database scris de noi
-rework legaturi in uml
-implementat e-mailer
-planificare pe saptamani

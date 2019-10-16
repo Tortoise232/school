@@ -1,5 +1,0 @@
-1,How many angles does a triangle have?,3,5
-2,What is 72 - 20?,52,10
-3,What would you grade this project?,10,10000
-5,testQuestion,testAnswer,0
-6,Text,answer,12
